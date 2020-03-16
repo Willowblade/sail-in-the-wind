@@ -20,7 +20,7 @@ config/description="A pleasant relaxing adventure game, centered around discover
 run/main_scene="res://src/menus/MainMenu.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="sail-in-the-wind"
-config/icon="res://assets/ui/logo.png"
+config/icon="res://assets/graphics/boat/boat.png"
 
 [autoload]
 
@@ -32,8 +32,6 @@ UI="*res://src/ui/UI.tscn"
 
 [display]
 
-window/size/test_width=1024
-window/size/test_height=600
 window/stretch/mode="2d"
 
 [importer_defaults]
@@ -82,5 +80,5 @@ ui_progress_dialogue={
 [rendering]
 
 quality/2d/use_pixel_snap=true
-environment/default_clear_color=Color( 0.443137, 0.443137, 0.443137, 1 )
+environment/default_clear_color=Color( 0.25098, 0.309804, 0.784314, 1 )
 environment/default_environment="res://default_env.tres"

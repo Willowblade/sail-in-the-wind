@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/game/tilesets/MapTiles.tres" type="TileSet" id=1]
+
+[node name="MapTiles" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 2, 2 )
+format = 1

@@ -2,22 +2,22 @@ extends Control
 
 
 onready var main_buttons = {
-	"start": get_node("Buttons/StartButton"),
-	"options": get_node("Buttons/OptionsButton"),
-	"exit": get_node("Buttons/ExitButton"),
+	"start": get_node("MainMenu/Buttons/StartButton"),
+	"options": get_node("MainMenu/Buttons/OptionsButton"),
+	"exit": get_node("MainMenu/Buttons/ExitButton"),
 }
 
 onready var options_buttons = {
-	"apply": get_node("Options/Buttons/ApplyButton"),
-	"back": get_node("Options/Buttons/BackButton"),
+	"apply": get_node("OptionsMenu/Buttons/ApplyButton"),
+	"back": get_node("OptionsMenu/Buttons/BackButton"),
 }
 
 onready var options_slider = {
-	"volume": get_node("Options/Volume/Slider"),
+	"volume": get_node("OptionsMenu/Volume/Slider"),
 }
 
-onready var main_menu = get_node("MainMenuContainer")
-onready var options_menu = get_node("OptionsMenuContainer")
+onready var main_menu = get_node("MainMenu")
+onready var options_menu = get_node("OptionsMenu")
 
 onready var current_menu = main_menu
 
