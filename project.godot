@@ -8,16 +8,27 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Island",
+"language": "GDScript",
+"path": "res://src/game/islands/island.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://src/game/player/player.gd"
+} ]
 _global_script_class_icons={
-
+"Island": "",
+"Player": ""
 }
 
 [application]
 
 config/name="Sail in the Wind"
 config/description="A pleasant relaxing adventure game, centered around discovery."
-run/main_scene="res://src/menus/MainMenu.tscn"
+run/main_scene="res://src/game/Game.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="sail-in-the-wind"
 config/icon="res://assets/graphics/boat/boat.png"
