@@ -6,7 +6,9 @@ onready var area = $Area
 
 var _cell_names = {}
 var founded = false
-var island_name = ""
+var island_name = "Ol' Faithful"
+
+export(String, "None", "Wood", "Metal", "Food") var resource_type = "Hello"
 
 signal island_entered(island, body)
 signal island_exited(island, body)

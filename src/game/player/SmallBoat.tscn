@@ -8,25 +8,25 @@
 [ext_resource path="res://assets/graphics/boat/small_boat_S_2.png" type="Texture" id=6]
 [ext_resource path="res://assets/graphics/boat/small_boat_S_1.png" type="Texture" id=7]
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 4 ), ExtResource( 5 ) ],
 "loop": true,
 "name": "up",
 "speed": 2.0
 }, {
-"frames": [ ExtResource( 1 ), ExtResource( 3 ) ],
-"loop": true,
-"name": "left-right",
-"speed": 2.0
-}, {
 "frames": [ ExtResource( 7 ), ExtResource( 6 ) ],
 "loop": true,
 "name": "down",
 "speed": 2.0
+}, {
+"frames": [ ExtResource( 1 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "left-right",
+"speed": 2.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 2.38002, 3.57032 )
 
 [node name="SmallBoat" type="KinematicBody2D"]
@@ -34,7 +34,7 @@ script = ExtResource( 2 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 position = Vector2( -0.492912, -2.69357 )
-frames = SubResource( 3 )
+frames = SubResource( 1 )
 animation = "left-right"
 frame = 1
 playing = true
@@ -42,4 +42,4 @@ playing = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -0.0147249, 0.686914 )
 rotation = 1.56189
-shape = SubResource( 4 )
+shape = SubResource( 2 )

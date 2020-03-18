@@ -15,14 +15,14 @@ animations = [ {
 "name": "up",
 "speed": 1.5
 }, {
-"frames": [ ExtResource( 1 ), ExtResource( 6 ) ],
-"loop": true,
-"name": "left-right",
-"speed": 1.5
-}, {
 "frames": [ ExtResource( 3 ), ExtResource( 7 ) ],
 "loop": true,
 "name": "down",
+"speed": 1.5
+}, {
+"frames": [ ExtResource( 1 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "left-right",
 "speed": 1.5
 } ]
 
@@ -36,6 +36,7 @@ script = ExtResource( 2 )
 position = Vector2( 0.132122, -3.20399 )
 frames = SubResource( 1 )
 animation = "left-right"
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -32,6 +32,8 @@ func _ready():
 func _body_entered_island(island, body):
 	if body is Player:
 		current_island = island
+		if island.island_name != "":
+			UI.show_island_name(island.island_name)
 		set_physics_process(true)
 	update()
 
@@ -39,6 +41,7 @@ func _body_exited_island(island, body):
 	if body is Player:
 		current_island = null
 		set_physics_process(false)
+		UI.show_name_island_dialog()
 	update()
 		
 func _physics_process(delta):

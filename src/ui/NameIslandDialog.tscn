@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/ui/name_island_dialog.gd" type="Script" id=1]
+
+[node name="NameIslandDialog" type="WindowDialog"]
+margin_left = 61.0842
+margin_top = 145.2
+margin_right = 339.084
+margin_bottom = 284.2
+window_title = "You found a new island!"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="."]
+margin_left = 50.3986
+margin_top = 46.6014
+margin_right = 232.399
+margin_bottom = 81.6014
+
+[node name="Label" type="Label" parent="."]
+margin_left = 23.0
+margin_top = 16.0
+margin_right = 224.0
+margin_bottom = 30.0
+text = "Now give it a name..."
+
+[node name="Button" type="Button" parent="."]
+margin_left = 89.2867
+margin_top = 102.01
+margin_right = 177.287
+margin_bottom = 122.01
+text = "NAME!"
