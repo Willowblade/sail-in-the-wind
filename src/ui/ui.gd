@@ -4,6 +4,8 @@ extends CanvasLayer
 onready var island_name_view = $IslandNameView
 onready var animation_player = $AnimationPlayer
 onready var name_island_dialog = $NameIslandDialog
+onready var settle_dialog = $SettleDialog
+
 
 onready var menus = {
 	"escape": get_node("EscapeMenu")
@@ -12,6 +14,10 @@ onready var menus = {
 var enabled = false
 
 var open_uis = []
+
+
+signal island_named(island_name)
+signal settle()
 
 
 
@@ -74,11 +80,33 @@ func _input(event):
 
 func show_island_name(island_name: String):
 	island_name_view.get_node("Label").text = island_name
+	island_name_view.get_node("Panel").rect_min_size = island_name_view.get_node("Label").get_minimum_size()
+#	island_name_view.get_node("Panel").rect_position.x = island_name_view.get_node("Label").rect_position.x + island_name_view.get_node("Label").get_minimum_size().x / 3 
+	print(-island_name_view.get_node("Panel").rect_position.x)
+	if animation_player.current_animation == "name_label":
+		animation_player.stop(true)
 	animation_player.play("name_label")
 	
 func show_name_island_dialog():
+	get_tree().paused = true
 	name_island_dialog.popup_centered()
 	
 func _on_name_island_closed():
-	print("Modal closed, ", name_island_dialog.get_node("LineEdit").text)
+	get_tree().paused = false
+	var text = name_island_dialog.get_node("LineEdit").text
+	print("Modal closed, ", text)
+	emit_signal("island_named", text)
+
+func settle():
+	get_tree().paused = true
+	settle_dialog.connect("confirmed", self, "_on_settle_confirmed")
+	settle_dialog.connect("popup_hide", self, "_on_settle_denied")
+	settle_dialog.show_modal(true)
+	
+func _on_settle_confirmed():
+	emit_signal("settle")
+	get_tree().paused = false
+	
+func _on_settle_denied():
+	get_tree().paused = false
 	

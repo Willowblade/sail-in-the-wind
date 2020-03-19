@@ -1,9 +1,22 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/game/overworld/overworld.gd" type="Script" id=1]
 [ext_resource path="res://src/game/islands/TestIsland.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/game/clouds/Clouds.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/game/player/LargeBoat.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/game/islands/TestSettleIsland.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/graphics/settlements/flag_1.png" type="Texture" id=6]
+[ext_resource path="res://assets/graphics/settlements/flag_3.png" type="Texture" id=7]
+[ext_resource path="res://assets/graphics/settlements/flag_0.png" type="Texture" id=8]
+[ext_resource path="res://assets/graphics/settlements/flag_2.png" type="Texture" id=9]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 8 ), ExtResource( 6 ), ExtResource( 9 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "default",
+"speed": 6.0
+} ]
 
 [node name="Overworld" type="Node2D"]
 script = ExtResource( 1 )
@@ -22,7 +35,19 @@ zoom = Vector2( 0.333, 0.333 )
 z_index = -1
 
 [node name="TestIsland" parent="Islands" instance=ExtResource( 2 )]
-position = Vector2( 65.6428, -71.0677 )
+position = Vector2( -217.575, -88.5503 )
+island_name = "TestIsland"
+
+[node name="TestSettleIsland" parent="Islands" instance=ExtResource( 5 )]
+position = Vector2( 92.9234, -82.6202 )
+island_name = "TestSettleIsland"
 
 [node name="Clouds" parent="." instance=ExtResource( 3 )]
 z_index = 2
+
+[node name="Flag" type="AnimatedSprite" parent="."]
+visible = false
+frames = SubResource( 1 )
+frame = 2
+playing = true
+offset = Vector2( 8, 8 )
