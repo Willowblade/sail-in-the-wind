@@ -5,6 +5,8 @@ onready var player = $Entities/LargeBoat
 onready var islands = $Islands
 onready var camera = $Entities/LargeBoat/Camera
 
+onready var creation_tile_scene = preload("res://src/game/overworld/CreationTile.tscn")
+
 export var audio_track: String = ""
 
 var current_island: Island = null
@@ -51,7 +53,7 @@ func _body_exited_island(island, body):
 	update()
 		
 func _physics_process(delta):
-	if current_island.founded:
+	if current_island.settled:
 		update()
 		hide_flag()
 		return
@@ -92,8 +94,34 @@ func _on_island_named(island_name: String):
 	UI.show_island_name(island_name)
 	
 func _on_settle_pressed():
+	current_island.settled = true
 	var interactable_tiles = get_interactable_tiles()
+	player.set_physics_process(false)
+	var harbor_creation_tile = creation_tile_scene.instance()
+	add_child(harbor_creation_tile)
+	harbor_creation_tile.position = interactable_tiles.coast.coordinates + Vector2(8, 8)
+	if interactable_tiles.direction == Vector2(0, 1):
+		harbor_creation_tile.rotation_degrees = 180
+	elif interactable_tiles.direction == Vector2(0, -1):
+		harbor_creation_tile.rotation_degrees = 0
+	elif interactable_tiles.direction == Vector2(1, 0):
+		harbor_creation_tile.rotation_degrees = 90
+	elif interactable_tiles.direction == Vector2(-1, 0):
+		harbor_creation_tile.rotation_degrees = -90
+	harbor_creation_tile.set_sprite("harbor")
+	harbor_creation_tile.play()
+	yield(harbor_creation_tile, "finished")
+	harbor_creation_tile.set_sprite("harbor_finished")
+	var settlement_creation_tile = creation_tile_scene.instance()
+	add_child(settlement_creation_tile)
+	settlement_creation_tile.position = interactable_tiles.land.coordinates + Vector2(8, 8)
+	settlement_creation_tile.set_sprite("wood_settlement_large")
+	settlement_creation_tile.play()
+	yield(settlement_creation_tile, "finished")
 	current_island.settle(interactable_tiles)
+	harbor_creation_tile.queue_free()
+	settlement_creation_tile.queue_free()
+	player.set_physics_process(true)
 	
 func _draw():
 	if current_island != null and DEBUG == true:

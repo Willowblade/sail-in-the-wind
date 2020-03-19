@@ -7,7 +7,7 @@ onready var area = $Area
 
 var _base_cell_names = {}
 var _contents_cell_names = {}
-var founded = false
+var settled = false
 
 export(String, "None", "Wood", "Metal", "Food") var resource_type = "None"
 export var island_name = ""
@@ -82,7 +82,7 @@ func get_settlement_tile_id():
 		return contents.tile_set.find_tile_by_name("metal_settlement_large")
 
 func settle(tiles: Dictionary):
-	founded = true
+	settled = true
 	var harbor_tile_id = contents.tile_set.find_tile_by_name("harbor")
 	var settlement_tile_id = get_settlement_tile_id()
 	var harbor_coordinate = contents.world_to_map(tiles["coast"]["coordinates"] - position)
