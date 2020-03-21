@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/flag_on.ogg-0c51f85f9977c239df491b2e2c480983.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/navigation/flag_on.ogg"
+dest_files=[ "res://.import/flag_on.ogg-0c51f85f9977c239df491b2e2c480983.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

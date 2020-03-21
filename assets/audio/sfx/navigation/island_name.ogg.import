@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/island_name.ogg-2e2ca93bd730395091cf23e55b28c4ec.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/navigation/island_name.ogg"
+dest_files=[ "res://.import/island_name.ogg-2e2ca93bd730395091cf23e55b28c4ec.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

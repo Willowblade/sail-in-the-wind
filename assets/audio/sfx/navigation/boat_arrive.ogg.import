@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/boat_arrive.ogg-a96c63f434b9d2e4dc7c562fa01c64ae.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/navigation/boat_arrive.ogg"
+dest_files=[ "res://.import/boat_arrive.ogg-a96c63f434b9d2e4dc7c562fa01c64ae.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

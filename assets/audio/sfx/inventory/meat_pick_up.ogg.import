@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/meat_pick_up.ogg-3dfb74e3f78406a46a9133f83fb1c66f.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/inventory/meat_pick_up.ogg"
+dest_files=[ "res://.import/meat_pick_up.ogg-3dfb74e3f78406a46a9133f83fb1c66f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/ui/ui.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/EscapeMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/ui/theme.tres" type="Theme" id=3]
 [ext_resource path="res://assets/graphics/ui/frame-export.png" type="Texture" id=4]
 [ext_resource path="res://src/ui/NameIslandDialog.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/ui/Inventory.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "name_label"
@@ -32,6 +33,15 @@ margin_bottom = 5.0
 expand_margin_left = 48.0
 expand_margin_right = 48.0
 
+[sub_resource type="DynamicFontData" id=5]
+font_path = "res://assets/fonts/BLKCHCRY.TTF"
+
+[sub_resource type="DynamicFont" id=4]
+size = 22
+font_data = SubResource( 5 )
+
+[sub_resource type="StyleBoxTexture" id=3]
+
 [node name="UI" type="CanvasLayer"]
 pause_mode = 2
 script = ExtResource( 1 )
@@ -45,9 +55,8 @@ anims/name_label = SubResource( 1 )
 popup_exclusive = true
 
 [node name="IslandNameView" type="Container" parent="."]
-margin_top = -7.7485
 margin_right = 40.0
-margin_bottom = 32.2515
+margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -77,6 +86,7 @@ margin_right = 569.0
 margin_bottom = -11.809
 grow_horizontal = 2
 grow_vertical = 2
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Heyhey
 "
@@ -99,6 +109,27 @@ rect_min_size = Vector2( 300, 140 )
 window_title = "Found a settlement?"
 dialog_text = "This island is inhabitable and yours to exploit!
 Do you want to found a settlement here?"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Inventory" parent="." instance=ExtResource( 6 )]
+margin_left = 475.49
+margin_top = 23.9374
+margin_right = 515.49
+margin_bottom = 63.9374
+
+[node name="Tolltip" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="Panel" parent="Tolltip"]
+margin_right = 40.0
+margin_bottom = 40.0
+custom_styles/panel = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

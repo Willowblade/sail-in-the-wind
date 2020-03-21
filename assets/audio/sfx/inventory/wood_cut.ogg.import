@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/wood_cut.ogg-eec2e925085d5677e19ff81306f92bc6.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/inventory/wood_cut.ogg"
+dest_files=[ "res://.import/wood_cut.ogg-eec2e925085d5677e19ff81306f92bc6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

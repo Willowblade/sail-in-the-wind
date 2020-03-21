@@ -1,7 +1,7 @@
 extends Sprite
 
 
-onready var animation_player = $AnimationPlayer
+onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 signal finished
 
@@ -20,6 +20,7 @@ onready var textures = {
 	"harbor_finished": load("res://assets/graphics/settlements/harbor_finished.png"),
 }
 
+var animation_speed = 0.75
 
 func set_sprite(tile_name):
 	if not tile_name in textures:
@@ -27,6 +28,7 @@ func set_sprite(tile_name):
 	texture = textures[tile_name]
 
 func play():
+	animation_player.playback_speed = animation_speed
 	animation_player.play("build")
 
 func _ready():

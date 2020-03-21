@@ -4,12 +4,14 @@ class_name Island
 onready var base = $Base
 onready var contents = $Contents
 onready var area = $Area
+onready var coast = $AnimatedCoasts
 
 var _base_cell_names = {}
 var _contents_cell_names = {}
 var settled = false
 
 export(String, "None", "Wood", "Metal", "Food") var resource_type = "None"
+export(String, FILE, "*.ogg") var audio_track = ""
 export var island_name = ""
 
 signal island_entered(island, body)
@@ -49,7 +51,7 @@ func get_tile_at_position(coordinates: Vector2):
 		"coordinates": base.map_to_world(internal_coordinates) + position,
 	}
 	
-func has_tile_at_position(coordinates: Vector2):
+func has_island_tile_at_position(coordinates: Vector2):
 	var tile_id = _get_tile_id(coordinates, base)
 
 	if tile_id != -1:
@@ -64,6 +66,18 @@ func tile_is_occupied(coordinates: Vector2):
 		return true
 	return false
 
+func tile_is_coast(coordinates: Vector2):
+	var tile_id = _get_tile_id(coordinates, coast)
+
+	if tile_id != -1:
+		return true
+	return false
+
+func get_coast_tile(coordinates: Vector2):
+	var internal_coordinates = coast.world_to_map(coordinates - position)
+	return {
+		"coordinates": coast.map_to_world(internal_coordinates) + position,
+	}
 
 func _get_tile_id(world_coordinates: Vector2, tilemap: TileMap) -> int:
 	var internal_coordinates = tilemap.world_to_map(world_coordinates - position)

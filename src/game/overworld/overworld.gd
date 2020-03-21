@@ -4,6 +4,7 @@ extends Node2D
 onready var player = $Entities/LargeBoat
 onready var islands = $Islands
 onready var camera = $Entities/LargeBoat/Camera
+onready var water = $Water
 
 onready var creation_tile_scene = preload("res://src/game/overworld/CreationTile.tscn")
 
@@ -32,62 +33,75 @@ func _ready():
 	UI.connect("island_named", self, "_on_island_named")
 	UI.connect("settle", self, "_on_settle_pressed")
 		
-	set_physics_process(false)
+
+func draw_water_around_player():
+	water.clear()
+	var water_tile_id = water.tile_set.find_tile_by_name("water")
+
+	for x in range(-11, 12):
+		for y in range(-9, 9):
+			var tile_position = water.world_to_map(player.position + Vector2(x * 16, y * 16))
+			water.set_cellv(tile_position, water_tile_id)
+
 		
 
 func _body_entered_island(island, body):
 	if body is Player:
 		current_island = island
+		if island.audio_track != "":
+			AudioEngine.play_background_music(island.audio_track)
 		if island.island_name != "":
 			UI.show_island_name(island.island_name)
 		else:
 			UI.show_name_island_dialog()
-		set_physics_process(true)
 	update()
 
 func _body_exited_island(island, body):
 	if body is Player:
 		current_island = null
-		set_physics_process(false)
-		
+		AudioEngine.play_background_music("res://")
 	update()
 		
 func _physics_process(delta):
-	if current_island.settled:
-		update()
-		hide_flag()
-		return
-		
-	var interactable_tiles = get_interactable_tiles()
-	if interactable_tiles != null:
-		show_flag(interactable_tiles["land"]["coordinates"])
-#		print(interactable_tiles)
-	else:
-		hide_flag()
-		
-	if _flag.visible:
-		if Input.is_action_just_pressed("ui_accept"):
-			UI.settle()
+	draw_water_around_player()
 	
-	update()
+	if current_island:
+		if current_island.settled:
+			update()
+			hide_flag()
+			return
+			
+		var interactable_tiles = get_interactable_tiles()
+		if interactable_tiles != null:
+			show_flag(interactable_tiles["land"]["coordinates"])
+	#		print(interactable_tiles)
+		else:
+			hide_flag()
+			
+		if _flag.visible:
+			if Input.is_action_just_pressed("ui_accept"):
+				UI.settle()
+		update()
+
+
+	
 
 
 func get_interactable_tiles():
 	var interact_position = player.global_position + 8 * player.direction
-	if current_island.has_tile_at_position(interact_position):
-		var coast_tile = current_island.get_tile_at_position(interact_position)
-		if coast_tile.name == "atlas":
-			interact_position += 16 * player.direction
-			if current_island.has_tile_at_position(interact_position):
-				if current_island.tile_is_occupied(interact_position):
-					return
-				var land_tile = current_island.get_tile_at_position(interact_position)
-				if land_tile.name.begins_with("land"):
-					return {
-						"coast": coast_tile,
-						"land": land_tile,
-						"direction": player.direction,
-					}
+	if current_island.tile_is_coast(interact_position):
+		var coast_tile = current_island.get_coast_tile(interact_position)
+		interact_position += 16 * player.direction
+		if current_island.has_island_tile_at_position(interact_position):
+			if current_island.tile_is_occupied(interact_position):
+				return
+			var land_tile = current_island.get_tile_at_position(interact_position)
+			if land_tile.name.begins_with("land"):
+				return {
+					"coast": coast_tile,
+					"land": land_tile,
+					"direction": player.direction,
+				}
 					
 func _on_island_named(island_name: String):
 	current_island.island_name = island_name

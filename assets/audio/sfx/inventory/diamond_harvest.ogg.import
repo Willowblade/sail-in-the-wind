@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/diamond_harvest.ogg-0825a8cf1961dec4de55623638690750.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/inventory/diamond_harvest.ogg"
+dest_files=[ "res://.import/diamond_harvest.ogg-0825a8cf1961dec4de55623638690750.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

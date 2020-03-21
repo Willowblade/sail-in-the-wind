@@ -5,6 +5,7 @@ onready var island_name_view = $IslandNameView
 onready var animation_player = $AnimationPlayer
 onready var name_island_dialog = $NameIslandDialog
 onready var settle_dialog = $SettleDialog
+onready var inventory = $Inventory
 
 
 onready var menus = {
@@ -16,9 +17,10 @@ var enabled = false
 var open_uis = []
 
 
+
+
 signal island_named(island_name)
 signal settle()
-
 
 
 func _ready():
@@ -31,9 +33,10 @@ func _ready():
 	
 	for child in menus.values():
 		child.connect("close", self, "_on_close_ui")
-	
+
 	name_island_dialog.connect("popup_hide", self, "_on_name_island_closed")
 	island_name_view.show()
+	inventory.show()
 
 func enable():
 	enabled = true
