@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://src/game/islands/Island.tscn" type="PackedScene" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 148.676, 131.634 )
 
 [node name="Island - E- WF" instance=ExtResource( 1 )]
 resource_type = "Wood"
@@ -14,3 +17,7 @@ tile_data = PoolIntArray( -524288, 4, 0, -524287, 6, 0, -393217, 4, 0, -458752, 
 
 [node name="Contents" parent="." index="2"]
 tile_data = PoolIntArray( -524288, 29, 0, -524287, 29, 0, -393217, 29, 0, -458752, 29, 0, -458751, 29, 0, -458750, 29, 0, -327682, 29, 0, -327681, 29, 0, -393214, 29, 0, -393213, 29, 0, -262147, 29, 0, -262146, 29, 0, -262145, 0, 0, -327677, 28, 0, -327676, 29, 0, -196616, 29, 0, -196615, 29, 0, -196612, 29, 0, -196611, 29, 0, -262140, 29, 0, -262139, 29, 0, -131080, 29, 0, -131079, 29, 0, -131076, 29, 0, -131075, 0, 0, -196603, 29, 0, -65543, 29, 0, -65542, 29, 0, -65541, 29, 0, -6, 29, 0, -5, 29, 0, -1, 28, 0, 0, 0, 0, 1, 29, 0, 65536, 29, 0, 65537, 29, 0, 196606, 29, 0, 196607, 29, 0, 131072, 29, 0, 262142, 29, 0, 262143, 29, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area" index="0"]
+position = Vector2( -10.098, -29.0316 )
+shape = SubResource( 1 )

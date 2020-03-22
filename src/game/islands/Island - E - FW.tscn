@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://src/game/islands/Island.tscn" type="PackedScene" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 94.7151, 113.963 )
 
 [node name="Island - E - FW" instance=ExtResource( 1 )]
 resource_type = "Food"
@@ -14,3 +17,7 @@ tile_data = PoolIntArray( -65538, 4, 0, -65537, 5, 0, -131072, 6, 0, -2, 7, 0, -
 
 [node name="Contents" parent="." index="2"]
 tile_data = PoolIntArray( -65538, 29, 0, -65537, 29, 0, -131072, 29, 0, -2, 29, 0, -65536, 28, 0, -65535, 29, 0, 262142, 0, 0, 196609, 29, 0, 327676, 29, 0, 327677, 28, 0, 262144, 29, 0, 393212, 29, 0, 393213, 29, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area" index="0"]
+position = Vector2( -12.3069, 26.5071 )
+shape = SubResource( 1 )

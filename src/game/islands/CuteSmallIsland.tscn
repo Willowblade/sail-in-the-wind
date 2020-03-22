@@ -1,8 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://src/game/islands/Island.tscn" type="PackedScene" id=1]
 
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 80.5248, 80.1804 )
+
 [node name="CuteSmallIsland" instance=ExtResource( 1 )]
+resource_type = "Wood"
+second_resource_type = "Metal"
 
 [node name="AnimatedCoasts" parent="." index="0"]
 tile_data = PoolIntArray( -196610, 27, 0, -196609, 34, 0, -262144, 33, 0, -262143, 33, 0, -262142, 35, 0, -262141, 32, 0, -131074, 15, 0, -196605, 18, 0, -65538, 14, 0, -131069, 17, 0, -2, 14, 0, -65533, 17, 0, 65534, 13, 0, 3, 16, 0, 131070, 4, 0, 131071, 11, 0, 65536, 10, 0, 65537, 10, 0, 65538, 12, 0, 65539, 9, 0 )
@@ -12,3 +17,7 @@ tile_data = PoolIntArray( -131073, 4, 0, -196608, 5, 0, -196607, 5, 0, -196606, 
 
 [node name="Contents" parent="." index="2"]
 tile_data = PoolIntArray( -196608, 0, 0, -196607, 2, 0, -131072, 1, 0, -131071, 0, 0, -131070, 2, 0, 2, 2, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area" index="0"]
+position = Vector2( 17.0043, -11.903 )
+shape = SubResource( 1 )

@@ -23,7 +23,7 @@ var DEBUG = true
 signal updated_game_state(game_state)
 
 
-var minimap_scale = 10
+var minimap_scale = 15
 const TIME_PER_FOOD = 75.0
 
 func all_islands_explored():

@@ -54,10 +54,10 @@ __meta__ = {
 }
 
 [node name="Background" type="Panel" parent="."]
-margin_left = -397.0
-margin_top = -272.0
-margin_right = 364.0
-margin_bottom = 299.0
+margin_left = -492.751
+margin_top = -288.563
+margin_right = 534.249
+margin_bottom = 346.437
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -65,9 +65,9 @@ __meta__ = {
 
 [node name="RoyalDecree" type="RichTextLabel" parent="."]
 margin_left = -285.568
-margin_top = -239.0
+margin_top = -256.339
 margin_right = 227.432
-margin_bottom = 188.0
+margin_bottom = 170.661
 custom_fonts/bold_font = ExtResource( 2 )
 custom_fonts/normal_font = SubResource( 3 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
@@ -91,14 +91,14 @@ __meta__ = {
 }
 
 [node name="IslandCircles" type="Node2D" parent="."]
-position = Vector2( -34.8591, 30.2454 )
+position = Vector2( -9.68393, 30.2454 )
 script = ExtResource( 3 )
 
 [node name="Labels" type="Control" parent="."]
-margin_left = -16.3226
-margin_top = 7.00818
-margin_right = 23.6774
-margin_bottom = 47.0082
+margin_left = -2.50479
+margin_top = 4.23813
+margin_right = 37.4952
+margin_bottom = 44.2382
 __meta__ = {
 "_edit_use_anchors_": false
 }
