@@ -7,6 +7,7 @@ extents = Vector2( 212.426, 193.545 )
 
 [node name="CapitalIsland" instance=ExtResource( 1 )]
 capital = true
+audio_track = "res://assets/audio/main_city.ogg"
 island_name = "Jerico"
 
 [node name="AnimatedCoasts" parent="." index="0"]

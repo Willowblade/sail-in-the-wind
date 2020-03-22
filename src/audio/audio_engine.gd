@@ -102,6 +102,7 @@ func reset():
 
 func play_background_music(track_path: String):
 	"""Initiates a track to play as background music"""
+	print("Playing background music ", track_path)
 	if background_audio != track_path:
 		background_player.stream = load(track_path)
 		background_player.play()

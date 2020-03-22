@@ -35,7 +35,7 @@ script = ExtResource( 1 )
 z_index = 1
 
 [node name="LargeBoat" parent="Entities" instance=ExtResource( 4 )]
-position = Vector2( -146.516, 300.514 )
+position = Vector2( -162.488, 324.351 )
 
 [node name="Camera" type="Camera2D" parent="Entities/LargeBoat"]
 current = true
@@ -80,7 +80,7 @@ z_index = 2
 [node name="Flag" type="AnimatedSprite" parent="."]
 visible = false
 frames = SubResource( 1 )
-frame = 3
+frame = 2
 playing = true
 offset = Vector2( 8, 8 )
 

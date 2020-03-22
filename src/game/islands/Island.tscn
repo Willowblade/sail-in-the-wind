@@ -9,6 +9,7 @@
 "island",
 ]]
 script = ExtResource( 1 )
+audio_track = "res://assets/audio/final_credit.ogg"
 
 [node name="AnimatedCoasts" parent="." instance=ExtResource( 4 )]
 

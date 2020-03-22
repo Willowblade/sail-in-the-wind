@@ -120,10 +120,11 @@ func draw_water_around_player():
 func _body_entered_island(island, body):
 	if body is LargeBoat:
 		current_island = island
-		if island.audio_track != "":
-			AudioEngine.play_background_music(island.audio_track)
-		if island.island_name != "":
-			UI.show_island_name(island.island_name)
+		print(current_island.audio_track)
+		if current_island.audio_track != "":
+			AudioEngine.play_background_music(current_island.audio_track)
+		if current_island.island_name != "":
+			UI.show_island_name(current_island.island_name)
 		else:
 			UI.show_name_island_dialog()
 	update()
@@ -131,7 +132,7 @@ func _body_entered_island(island, body):
 func _body_exited_island(island, body):
 	if body is LargeBoat:
 		current_island = null
-		AudioEngine.play_background_music("res://")
+		AudioEngine.play_background_music("res://assets/audio/sea.ogg")
 	update()
 	
 func show_anchor():
@@ -148,7 +149,7 @@ func _physics_process(delta):
 		UI.show_map(player)
 		return
 	
-	if current_island:			
+	if current_island:
 		var interactable_tiles = get_interactable_tiles()
 		if interactable_tiles != null:
 			if interactable_tiles.type == "settle":
@@ -192,7 +193,6 @@ func get_interactable_tiles():
 				var contents_tile_name = contents_tile.tile_name
 				print(contents_tile_name)
 				if contents_tile_name.begins_with("capital_gate"):
-					print("Interacting with a capital")
 					return {
 						"type": "capital",
 						"contents": contents_tile

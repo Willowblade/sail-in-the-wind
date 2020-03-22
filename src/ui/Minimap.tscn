@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/ui/minimap.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/main_font.tres" type="DynamicFont" id=2]
@@ -20,13 +20,6 @@ font_path = "res://assets/fonts/BLKCHCRY.TTF"
 [sub_resource type="DynamicFont" id=3]
 size = 28
 font_data = SubResource( 2 )
-
-[sub_resource type="DynamicFontData" id=4]
-font_path = "res://assets/fonts/BLKCHCRY.TTF"
-
-[sub_resource type="DynamicFont" id=5]
-size = 18
-font_data = SubResource( 4 )
 
 [node name="Minimap" type="Control"]
 anchor_left = 0.5
@@ -74,18 +67,6 @@ custom_colors/default_color = Color( 0, 0, 0, 1 )
 bbcode_enabled = true
 bbcode_text = "[center]Map[/center]"
 text = "Map"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="."]
-margin_left = -277.928
-margin_top = 282.331
-margin_right = 210.072
-margin_bottom = 305.331
-custom_fonts/font = SubResource( 5 )
-custom_colors/font_color = Color( 0, 0, 0, 0.368627 )
-text = "PS: press Tab or Square button on controller to cycle through options"
 __meta__ = {
 "_edit_use_anchors_": false
 }

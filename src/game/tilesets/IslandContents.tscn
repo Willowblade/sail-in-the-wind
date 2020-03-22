@@ -137,7 +137,7 @@
 12/navigation_offset = Vector2( 0, 0 )
 12/shapes = [  ]
 12/z_index = 0
-13/name = "captital_top_left_stone"
+13/name = "capital_top_left_stone"
 13/texture = ExtResource( 2 )
 13/tex_offset = Vector2( 0, 0 )
 13/modulate = Color( 1, 1, 1, 1 )
@@ -147,7 +147,7 @@
 13/navigation_offset = Vector2( 0, 0 )
 13/shapes = [  ]
 13/z_index = 0
-14/name = "captital_top_middle_stone"
+14/name = "capital_top_middle_stone"
 14/texture = ExtResource( 2 )
 14/tex_offset = Vector2( 0, 0 )
 14/modulate = Color( 1, 1, 1, 1 )
@@ -157,7 +157,7 @@
 14/navigation_offset = Vector2( 0, 0 )
 14/shapes = [  ]
 14/z_index = 0
-15/name = "captital_top_right_stone"
+15/name = "capital_top_right_stone"
 15/texture = ExtResource( 2 )
 15/tex_offset = Vector2( 0, 0 )
 15/modulate = Color( 1, 1, 1, 1 )
@@ -227,7 +227,7 @@
 21/navigation_offset = Vector2( 0, 0 )
 21/shapes = [  ]
 21/z_index = 0
-22/name = "captital_top_left_wood"
+22/name = "capital_top_left_wood"
 22/texture = ExtResource( 3 )
 22/tex_offset = Vector2( 0, 0 )
 22/modulate = Color( 1, 1, 1, 1 )
@@ -237,7 +237,7 @@
 22/navigation_offset = Vector2( 0, 0 )
 22/shapes = [  ]
 22/z_index = 0
-23/name = "captital_top_middle_wood"
+23/name = "capital_top_middle_wood"
 23/texture = ExtResource( 3 )
 23/tex_offset = Vector2( 0, 0 )
 23/modulate = Color( 1, 1, 1, 1 )
@@ -247,7 +247,7 @@
 23/navigation_offset = Vector2( 0, 0 )
 23/shapes = [  ]
 23/z_index = 0
-24/name = "captital_top_right_wood"
+24/name = "capital_top_right_wood"
 24/texture = ExtResource( 3 )
 24/tex_offset = Vector2( 0, 0 )
 24/modulate = Color( 1, 1, 1, 1 )
@@ -257,7 +257,7 @@
 24/navigation_offset = Vector2( 0, 0 )
 24/shapes = [  ]
 24/z_index = 0
-25/name = "captital_bottom_left_wood"
+25/name = "capital_bottom_left_wood"
 25/texture = ExtResource( 3 )
 25/tex_offset = Vector2( 0, 0 )
 25/modulate = Color( 1, 1, 1, 1 )
@@ -267,7 +267,7 @@
 25/navigation_offset = Vector2( 0, 0 )
 25/shapes = [  ]
 25/z_index = 0
-26/name = "captital_gate_wood"
+26/name = "capital_gate_wood"
 26/texture = ExtResource( 3 )
 26/tex_offset = Vector2( 0, 0 )
 26/modulate = Color( 1, 1, 1, 1 )
@@ -277,7 +277,7 @@
 26/navigation_offset = Vector2( 0, 0 )
 26/shapes = [  ]
 26/z_index = 0
-27/name = "captital_bottom_right_wood"
+27/name = "capital_bottom_right_wood"
 27/texture = ExtResource( 3 )
 27/tex_offset = Vector2( 0, 0 )
 27/modulate = Color( 1, 1, 1, 1 )
