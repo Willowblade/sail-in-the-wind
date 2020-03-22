@@ -16,6 +16,8 @@ var waves_max = false
 
 var state = "IDLE"
 
+var player_name = ""
+var boat_name = ""
 
 func _ready():
 	pass

@@ -39,6 +39,7 @@ Flow="*res://src/globals/Flow.tscn"
 AudioEngine="*res://src/audio/AudioEngine.tscn"
 Preferences="*res://src/globals/Preferences.tscn"
 Transitions="*res://src/globals/Transitions.tscn"
+GameState="*res://src/globals/GameState.tscn"
 UI="*res://src/ui/UI.tscn"
 
 [display]

@@ -24,7 +24,7 @@
 [ext_resource path="res://assets/graphics/boat/boat_drag_UD_4.png" type="Texture" id=22]
 [ext_resource path="res://assets/graphics/boat/boat_drag_UD_7.png" type="Texture" id=23]
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 19 ), ExtResource( 16 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 23 ) ],
 "loop": false,
@@ -47,7 +47,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 4 ), ExtResource( 5 ) ],
 "loop": true,
@@ -65,7 +65,7 @@ animations = [ {
 "speed": 1.5
 } ]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 2.71188, 4.81425 )
 
 [node name="LargeBoat" type="KinematicBody2D"]
@@ -74,14 +74,14 @@ script = ExtResource( 2 )
 [node name="Waves" type="AnimatedSprite" parent="."]
 position = Vector2( 1, 11.336 )
 z_as_relative = false
-frames = SubResource( 3 )
+frames = SubResource( 1 )
 animation = "vertical"
 frame = 7
 playing = true
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -3 )
-frames = SubResource( 1 )
+frames = SubResource( 2 )
 animation = "left-right"
 frame = 1
 playing = true
@@ -89,4 +89,4 @@ playing = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.320129, 0.486196 )
 rotation = 1.56189
-shape = SubResource( 2 )
+shape = SubResource( 3 )

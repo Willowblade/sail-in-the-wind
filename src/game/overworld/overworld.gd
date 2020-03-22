@@ -12,8 +12,6 @@ export var audio_track: String = ""
 
 var current_island: Island = null
 
-var DEBUG = true
-
 onready var _flag = $Flag
 
 func _ready():
@@ -32,6 +30,15 @@ func _ready():
 		
 	UI.connect("island_named", self, "_on_island_named")
 	UI.connect("settle", self, "_on_settle_pressed")
+	UI.connect("new_player_name", self, "_on_new_player_name")
+	if not GameState.game_state.get("player", {}).get("name"):
+		UI.show_decree()
+		
+		
+func _on_new_player_name(new_player_data):
+	GameState.game_state["player"] = new_player_data
+	player.player_name = new_player_data.name
+	player.boat_name = new_player_data.boat_name
 		
 
 func draw_water_around_player():
@@ -138,7 +145,7 @@ func _on_settle_pressed():
 	player.set_physics_process(true)
 	
 func _draw():
-	if current_island != null and DEBUG == true:
+	if current_island != null and GameState.DEBUG == true:
 		draw_circle(player.global_position + 8 * player.direction, 2, Color(0, 0, 0))
 		draw_circle(player.global_position + 8 * player.direction, 1, Color(1, 1, 1))
 		draw_circle(player.global_position + 24 * player.direction, 2, Color(0, 0, 0))

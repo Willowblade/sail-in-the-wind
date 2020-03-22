@@ -10,15 +10,15 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [  ],
-"loop": true,
-"name": "New Anim",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "move",
 "speed": 7.5
+}, {
+"frames": [  ],
+"loop": true,
+"name": "New Anim",
+"speed": 5.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]

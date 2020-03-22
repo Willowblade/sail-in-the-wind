@@ -3,20 +3,27 @@ extends Control
 
 onready var frame_scene = preload("res://src/ui/InventoryIcon.tscn")
 
-var inventory_space = 3
-var contents = ["wood", "food", "metal"]
 
+var frame_count = 0
+var frames = []
 
 func _ready():
 	set_frames()
 	set_contents()
+	GameState.connect("updated_game_state", self, "on_updated_game_state")
 	
-func has_item(item: String):
-	contents.count(item)
-	
-func add_item(item: String):
-	if contents.size() < inventory_space:
-		contents.append(item)
+func get_contents() -> Array:
+	return GameState.game_state.inventory.contents
+
+func get_space() -> Array:
+	return GameState.game_state.inventory.space
+
+func on_updated_game_state():
+	var new_frames = get_space()
+	if new_frames != frame_count:
+		frame_count = new_frames
+		set_frames()
+	set_contents()
 	
 func create_frame():
 	var frame = frame_scene.instance()
@@ -24,16 +31,23 @@ func create_frame():
 	return frame
 	
 func set_frames():
-	print(rect_position)
-	var i = 0
-	for space in inventory_space:
+	for frame in frames:
+#		remove_child(frame)
+		frame.queue_free()
+
+	frames = []
+	var space = get_space()
+	for i in range(space):
 		var frame = create_frame()
-		frame.rect_position = rect_position + i * Vector2(0, 60)
-		i += 1
+		frame.rect_position = rect_position + i * Vector2(52, 0)
+		frames.append(frame)
 		
 func set_contents():
-	var frames = get_children()
-	for i in range(contents.size()):
+	var contents = get_contents()
+	for frame in frames:
+		frame.clear_contents()
+
+	for i in range(min(contents.size(), frames.size())):
 		var frame = frames[i]
 		frame.set_contents((contents[i]))
 	

@@ -19,10 +19,11 @@ onready var contents_textures = {
 func _ready():
 	pass
 
+
+func clear_contents():
+	texture = frame_textures.free
+	contents.texture = null
+
 func set_contents(content_name: String):
-	if content_name == null:
-		texture = frame_textures.free
-		contents.texture = null
-	else:
-		texture = frame_textures.taken
-		contents.texture = contents_textures[content_name]
+	texture = frame_textures.taken
+	contents.texture = contents_textures[content_name]

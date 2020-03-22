@@ -9,13 +9,28 @@ onready var coast = $AnimatedCoasts
 var _base_cell_names = {}
 var _contents_cell_names = {}
 var settled = false
+var inventory = {}
+var level = 1
+# how to solve this little issue? Timer to increase gold?
+var gold = 0
+var needed = {}
+
+var discovered_by = ""
 
 export(String, "None", "Wood", "Metal", "Food") var resource_type = "None"
+export(String, "None", "Wood", "Metal", "Food") var second_resource_type = "None"
 export(String, FILE, "*.ogg") var audio_track = ""
 export var island_name = ""
 
 signal island_entered(island, body)
 signal island_exited(island, body)
+
+
+const ECONOMY = {
+	"food": 20,
+	"wood": 100,
+	"metal": 500,
+}
 
 
 func _ready():
@@ -24,6 +39,21 @@ func _ready():
 	
 	area.connect("body_entered", self, "_on_body_entered")
 	area.connect("body_exited", self, "_on_body_exited")
+
+
+func get_prices(item_name: String):
+	var buy_modifier = 1.0
+	if item_name == resource_type.to_lower():
+		buy_modifier = 0.5
+	elif item_name == second_resource_type.to_lower():
+		buy_modifier = 0.8
+	elif item_name in needed:
+		buy_modifier = 3.0
+
+	return {
+		"buy_price": 2 * 1.0 / sqrt(level) * ECONOMY[item_name] * buy_modifier,
+		"sell_price": 1.0 / sqrt(level) * ECONOMY[item_name] * buy_modifier
+	}
 
 
 func get_tile_mapping(tilemap: TileMap) -> Dictionary:

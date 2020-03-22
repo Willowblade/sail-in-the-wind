@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/ui/island_shop.gd" type="Script" id=1]
+[ext_resource path="res://assets/graphics/ui/select.png" type="Texture" id=2]
+[ext_resource path="res://assets/graphics/ui/ui_border.png" type="Texture" id=3]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 144, 144 )
+margin_left = 48.0
+margin_right = 48.0
+margin_top = 48.0
+margin_bottom = 48.0
+
+[sub_resource type="DynamicFontData" id=3]
+font_path = "res://assets/fonts/BLKCHCRY.TTF"
+
+[sub_resource type="DynamicFont" id=4]
+size = 26
+font_data = SubResource( 3 )
+
+[node name="IslandShop" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_left = 164.0
+margin_top = 95.0
+margin_right = 792.0
+margin_bottom = 447.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="TownShopLabel" type="RichTextLabel" parent="."]
+margin_left = 237.0
+margin_top = 121.107
+margin_right = 689.0
+margin_bottom = 161.107
+custom_fonts/normal_font = SubResource( 4 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
+bbcode_text = "[center][u]Ye olde shoppe[/u][/center]"
+text = "Ye olde shoppe"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 455.739, 268.952 )
+
+[node name="Marker" type="TextureRect" parent="."]
+margin_right = 32.0
+margin_bottom = 32.0
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

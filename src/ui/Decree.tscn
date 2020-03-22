@@ -1,0 +1,183 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://assets/fonts/main_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/graphics/ui/royal_theme.png" type="Texture" id=2]
+[ext_resource path="res://assets/graphics/ui/frame-bottom.png" type="Texture" id=3]
+[ext_resource path="res://assets/graphics/ui/select.png" type="Texture" id=4]
+[ext_resource path="res://assets/graphics/ui/signature_xs.png" type="Texture" id=5]
+[ext_resource path="res://src/ui/decree.gd" type="Script" id=6]
+[ext_resource path="res://assets/graphics/ui/royal_stamp.png" type="Texture" id=7]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 144, 144 )
+margin_left = 47.0
+margin_right = 47.0
+margin_top = 47.0
+margin_bottom = 47.0
+
+[sub_resource type="DynamicFontData" id=2]
+font_path = "res://assets/fonts/BLKCHCRY.TTF"
+
+[sub_resource type="DynamicFont" id=3]
+size = 28
+font_data = SubResource( 2 )
+
+[sub_resource type="StyleBoxTexture" id=8]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="StyleBoxTexture" id=9]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="StyleBoxTexture" id=7]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 16, 16 )
+
+[node name="Decree" type="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="Panel" parent="."]
+margin_left = -359.0
+margin_top = -272.0
+margin_right = 301.0
+margin_bottom = 313.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="RichTextLabel" parent="."]
+margin_left = -279.928
+margin_top = -195.316
+margin_right = 233.072
+margin_bottom = 229.684
+custom_fonts/normal_font = ExtResource( 1 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
+bbcode_text = "
+[center]Loyal servant of the empire[/center]
+
+As commanded by his Royal Highness Jerico, our colonial foundation needs expanding. You have been chosen as Lord Commander of the Exploratory Fleet, which you will lead. We've built you a ship. It should serve you well.
+
+Don't feel spoiled, however! You'll have to provide for your own supplies. You will be renumerated for your discoveries.
+
+Please sign this document to officially accept your duties as commander. You can optionally name your ship as well. If you don't, it will be named \"I'm A Boat\"."
+text = "
+Loyal servant of the empire
+
+As commanded by his Royal Highness Jerico, our colonial foundation needs expanding. You have been chosen as Lord Commander of the Exploratory Fleet, which you will lead. We've built you a ship. It should serve you well.
+
+Don't feel spoiled, however! You'll have to provide for your own supplies. You will be renumerated for your discoveries.
+
+Please sign this document to officially accept your duties as commander. You can optionally name your ship as well. If you don't, it will be named \"I'm A Boat\"."
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Date" type="RichTextLabel" parent="."]
+margin_left = -294.336
+margin_top = -239.3
+margin_right = 231.664
+margin_bottom = 200.7
+custom_fonts/normal_font = ExtResource( 1 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
+bbcode_text = "[right]1st of Summer 1431[/right]"
+text = "1st of Summer 1431"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoyalDecree" type="RichTextLabel" parent="."]
+margin_left = -285.568
+margin_top = -239.0
+margin_right = 227.432
+margin_bottom = 188.0
+custom_fonts/bold_font = ExtResource( 1 )
+custom_fonts/normal_font = SubResource( 3 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
+bbcode_text = "Royal Decree"
+text = "Royal Decree"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="LineEdit" parent="."]
+margin_left = -277.361
+margin_top = 236.576
+margin_right = -80.3613
+margin_bottom = 288.576
+custom_styles/focus = SubResource( 8 )
+custom_styles/normal = SubResource( 9 )
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/clear_button_color = Color( 0, 0, 0, 1 )
+max_length = 30
+placeholder_text = "Your name..."
+caret_blink = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BoatName" type="LineEdit" parent="."]
+margin_left = -42.2118
+margin_top = 235.672
+margin_right = 125.788
+margin_bottom = 287.672
+custom_styles/focus = SubResource( 6 )
+custom_styles/normal = SubResource( 7 )
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+max_length = 30
+expand_to_text_length = true
+placeholder_text = "Boat name..."
+caret_blink = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Marker" type="TextureRect" parent="."]
+margin_left = 160.0
+margin_top = 240.0
+margin_right = 192.0
+margin_bottom = 272.0
+texture = ExtResource( 4 )
+expand = true
+
+[node name="SuccessIcon" type="TextureRect" parent="."]
+margin_left = 188.893
+margin_top = 236.403
+margin_right = 236.893
+margin_bottom = 284.403
+texture = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = 234.599
+margin_top = 249.008
+margin_right = 282.599
+margin_bottom = 297.008
+texture = ExtResource( 7 )
+expand = true
