@@ -24,11 +24,11 @@ font_path = "res://assets/fonts/BLKCHCRY.TTF"
 size = 28
 font_data = SubResource( 2 )
 
-[sub_resource type="StyleBoxTexture" id=8]
+[sub_resource type="StyleBoxTexture" id=4]
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 16, 16 )
 
-[sub_resource type="StyleBoxTexture" id=9]
+[sub_resource type="StyleBoxTexture" id=5]
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 16, 16 )
 
@@ -138,8 +138,8 @@ margin_left = -277.361
 margin_top = 236.576
 margin_right = -80.3613
 margin_bottom = 288.576
-custom_styles/focus = SubResource( 8 )
-custom_styles/normal = SubResource( 9 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/clear_button_color = Color( 0, 0, 0, 1 )

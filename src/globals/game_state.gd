@@ -21,7 +21,12 @@ var game_state = {
 var DEBUG = true
 
 signal updated_game_state(game_state)
-	
+
+
+const TIME_PER_FOOD = 180.0
+
+func get_food_rate():
+	return 1.0 / TIME_PER_FOOD / sqrt(game_state.upgrades.stamina + 1)
 
 func has_inventory_space():
 	return game_state.inventory.contents.size() < game_state.inventory.space

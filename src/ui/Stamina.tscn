@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/ui/stamina.gd" type="Script" id=1]
+[ext_resource path="res://assets/graphics/decorations/food.png" type="Texture" id=2]
+[ext_resource path="res://assets/graphics/ui/food-bar-frame.png" type="Texture" id=3]
+[ext_resource path="res://assets/graphics/ui/food-bar.png" type="Texture" id=4]
+
+[node name="Stamina" type="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 48.0
+margin_bottom = 48.0
+texture = ExtResource( 2 )
+expand = true
+
+[node name="ConsumptionBar" type="Node2D" parent="."]
+
+[node name="Frame" type="Sprite" parent="ConsumptionBar"]
+position = Vector2( 57.6497, 25.8803 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 3 )
+
+[node name="Bar" type="Sprite" parent="ConsumptionBar"]
+position = Vector2( 54.6249, 43.9151 )
+scale = Vector2( 3, -3 )
+texture = ExtResource( 4 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 7, 2, 1, 12 )

@@ -51,6 +51,9 @@ func _ready():
 
 
 func _physics_process(delta):
+	if not visible:
+		return
+		
 	if marker_positions.size() == 0:
 		return
 		

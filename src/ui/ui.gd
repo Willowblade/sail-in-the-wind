@@ -7,6 +7,9 @@ onready var name_island_dialog = $NameIslandDialog
 onready var settle_dialog = $SettleDialog
 onready var inventory = $Inventory
 onready var gold_count = $GoldCount
+onready var stamina = $Stamina
+onready var ship_upgrades = $ShipUpgrades
+onready var island_shop = $IslandShop
 
 onready var decree = $Decree
 
@@ -25,6 +28,14 @@ signal new_player_name(player_name_data)
 
 
 var button_pressed = null
+
+func pause_game():
+	get_tree().paused = true
+	stamina.pause()
+	
+func resume_game():
+	get_tree().paused = false
+	stamina.play()
 
 func _ready():
 	disable()
@@ -47,13 +58,83 @@ func _ready():
 	on_updated_game_state()
 	gold_count.show()
 	
+	stamina.show()
+	
 	if GameState.DEBUG == true:
-		set_physics_process(true)
-	else:
-		set_physics_process(false)
+		enable()
 
+	
+func on_updated_game_state():
+	gold_count.get_node("Label").text = ": " + str(GameState.game_state["gold"])
+	
+func _on_decree_done(decree_data):
+	get_tree().paused = false
+	decree.hide()
+	decree.set_physics_process(false)
+	emit_signal("new_player_name", decree_data)
+	
+func show_decree():
+	decree.show()
+	decree.activate()
+	decree.set_physics_process(true)
+	resume_game()
 
-func _physics_process(delta):
+func enable():
+	enabled = true
+	set_process_input(true)
+
+func disable():
+	enabled = false
+	set_process_input(false)
+
+func reset():
+	for child in get_children():
+		if child != animation_player:
+			child.hide()
+	open_uis.clear()
+	Flow.resume()
+
+func open_ui(ui_name, information=null):
+	# naming is a soupie here.
+	var menu = menus[ui_name]
+	if information:
+		menu.initialize(information)
+	menu.show()
+	if menu.should_pause:
+		pause_game()
+		
+	open_uis.append(menu)
+
+func _on_close_ui(menu):
+	menu.hide()
+	open_uis.erase(menu)
+	resume_game()
+#	if menu.should_pause:
+#		for open_ui in open_uis:
+#			if open_ui.should_pause:
+#				return
+		
+
+func _input(event):
+	if not enabled:
+		print("Something wrong with UI")
+		return
+		
+	if Input.is_action_just_pressed("ui_menu"):
+		if name_island_dialog.visible:
+			# have to name the island. Box still needs theming!
+			pass
+		elif settle_dialog.visible:
+			settle_dialog.close()
+		elif ship_upgrades.visible:
+			ship_upgrades.close()
+		elif island_shop.visible:
+			island_shop.close()
+		elif decree.visible:
+			pass
+		else:
+			open_ui("escape")
+
 	if Input.is_key_pressed(KEY_1): 
 		if button_pressed != KEY_1:
 			GameState.add_gold(100)
@@ -98,63 +179,6 @@ func _physics_process(delta):
 	else:
 		button_pressed = null
 	
-func on_updated_game_state():
-	gold_count.get_node("Label").text = ": " + str(GameState.game_state["gold"])
-	
-func _on_decree_done(decree_data):
-	get_tree().paused = false
-	decree.hide()
-	decree.set_physics_process(false)
-	emit_signal("new_player_name", decree_data)
-	
-func show_decree():
-	decree.show()
-	decree.activate()
-	decree.set_physics_process(true)
-	get_tree().paused = true
-
-func enable():
-	enabled = true
-	set_process_input(true)
-
-func disable():
-	enabled = false
-	set_process_input(false)
-
-func reset():
-	for child in get_children():
-		child.hide()
-	open_uis.clear()
-	Flow.resume()
-
-func open_ui(ui_name, information=null):
-	# naming is a soupie here.
-	var menu = menus[ui_name]
-	if information:
-		menu.initialize(information)
-	menu.show()
-	if menu.should_pause:
-		Flow.pause()
-		
-	open_uis.append(menu)
-
-func _on_close_ui(menu):
-	menu.hide()
-	open_uis.erase(menu)
-	if menu.should_pause:
-		for open_ui in open_uis:
-			if open_ui.should_pause:
-				return
-		Flow.resume()
-
-func _input(event):
-	if not enabled:
-		print("Something wrong with UI")
-		return
-		
-	if Input.is_action_just_pressed("ui_menu"):
-		open_ui("escape")
-		
 
 func show_island_name(island_name: String):
 	island_name_view.get_node("Label").text = island_name
@@ -166,25 +190,25 @@ func show_island_name(island_name: String):
 	animation_player.play("name_label")
 	
 func show_name_island_dialog():
-	get_tree().paused = true
+	resume_game()
 	name_island_dialog.popup_centered()
 	
 func _on_name_island_closed():
-	get_tree().paused = false
+	resume_game()
 	var text = name_island_dialog.get_node("LineEdit").text
 	print("Modal closed, ", text)
 	emit_signal("island_named", text)
 
 func settle():
-	get_tree().paused = true
+	pause_game()
 	settle_dialog.connect("confirmed", self, "_on_settle_confirmed")
 	settle_dialog.connect("popup_hide", self, "_on_settle_denied")
 	settle_dialog.show_modal(true)
 	
 func _on_settle_confirmed():
 	emit_signal("settle")
-	get_tree().paused = false
+	resume_game()
 	
 func _on_settle_denied():
-	get_tree().paused = false
+	resume_game()
 	

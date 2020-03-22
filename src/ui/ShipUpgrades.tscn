@@ -16,12 +16,12 @@ margin_right = 48.0
 margin_top = 48.0
 margin_bottom = 48.0
 
-[sub_resource type="DynamicFontData" id=3]
+[sub_resource type="DynamicFontData" id=2]
 font_path = "res://assets/fonts/BLKCHCRY.TTF"
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=3]
 size = 26
-font_data = SubResource( 3 )
+font_data = SubResource( 2 )
 
 [node name="ShipUpgrades" type="Control"]
 anchor_right = 1.0
@@ -43,7 +43,7 @@ margin_left = 237.0
 margin_top = 94.2728
 margin_right = 689.0
 margin_bottom = 134.273
-custom_fonts/normal_font = SubResource( 4 )
+custom_fonts/normal_font = SubResource( 3 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 bbcode_enabled = true
 bbcode_text = "[center][u]Ye olde shippeyard[/u][/center]"
