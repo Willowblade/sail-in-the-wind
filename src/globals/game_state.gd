@@ -3,8 +3,8 @@ extends Node
 var game_state = {
 	"gold": 500,
 	"player": {
-		"name": "Testyman",
-		"boat_name": "My main boaty!",
+		# "name": "Testyman",
+		# "boat_name": "My main boaty!",
 	},
 	"inventory": {
 		"space": 6,
@@ -18,7 +18,7 @@ var game_state = {
 	}
 }
 
-var DEBUG = true
+var DEBUG = false
 
 signal updated_game_state(game_state)
 

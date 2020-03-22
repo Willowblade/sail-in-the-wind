@@ -98,6 +98,7 @@ func start_game():
 	gold_count.show()
 	stamina.show()
 	stamina.play()
+	enable()
 	
 		
 func stop_game():
@@ -105,6 +106,7 @@ func stop_game():
 	gold_count.hide()
 	stamina.hide()
 	stamina.pause()
+	disable()
 
 	
 func on_updated_game_state():

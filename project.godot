@@ -57,6 +57,7 @@ UI="*res://src/ui/UI.tscn"
 [display]
 
 window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [importer_defaults]
 

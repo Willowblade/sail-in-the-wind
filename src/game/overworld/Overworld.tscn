@@ -80,7 +80,7 @@ z_index = 2
 [node name="Flag" type="AnimatedSprite" parent="."]
 visible = false
 frames = SubResource( 1 )
-frame = 2
+frame = 1
 playing = true
 offset = Vector2( 8, 8 )
 
