@@ -17,10 +17,13 @@ var needed = {}
 
 var discovered_by = ""
 
+export var capital: bool = false
 export(String, "None", "Wood", "Metal", "Food") var resource_type = "None"
 export(String, "None", "Wood", "Metal", "Food") var second_resource_type = "None"
 export(String, FILE, "*.ogg") var audio_track = ""
 export var island_name = ""
+
+var map_offset
 
 signal island_entered(island, body)
 signal island_exited(island, body)
@@ -28,14 +31,34 @@ signal island_exited(island, body)
 
 const ECONOMY = {
 	"food": 20,
-	"wood": 100,
-	"metal": 500,
+	"wood": 80,
+	"metal": 320,
 }
 
 
 func _ready():
+	map_offset = Vector2(randf() - 0.5, randf() - 0.5)
+	if capital:
+		settled = true
 	_base_cell_names = get_tile_mapping(base)
 	_contents_cell_names = get_tile_mapping(contents)
+
+	if capital:
+		inventory = {
+			"food": 99999,
+			"wood": 99999,
+			"metal": 99999,
+
+		}
+	else:
+
+		for resource in ["wood", "food", "metal"]:
+			if resource_type.to_lower() == resource:
+				inventory[resource] = 99999
+			elif second_resource_type.to_lower() == resource:
+				inventory[resource] = 99999
+			else:
+				inventory[resource] = 0 
 	
 	area.connect("body_entered", self, "_on_body_entered")
 	area.connect("body_exited", self, "_on_body_exited")
@@ -49,6 +72,9 @@ func get_prices(item_name: String):
 		buy_modifier = 0.8
 	elif item_name in needed:
 		buy_modifier = 3.0
+	
+	if capital:
+		buy_modifier = 0.7
 
 	return {
 		"buy_price": 2 * 1.0 / sqrt(level) * ECONOMY[item_name] * buy_modifier,
@@ -102,6 +128,16 @@ func tile_is_coast(coordinates: Vector2):
 	if tile_id != -1:
 		return true
 	return false
+
+
+func get_contents_tile(coordinates: Vector2):
+	var internal_coordinates = contents.world_to_map(coordinates - position)
+	var tile_id = _get_tile_id(coordinates, contents)
+	return {
+		"tile_id": tile_id,
+		"tile_name": contents.tile_set.tile_get_name(tile_id),
+		"coordinates": contents.map_to_world(internal_coordinates) + position,
+	}
 
 func get_coast_tile(coordinates: Vector2):
 	var internal_coordinates = coast.world_to_map(coordinates - position)

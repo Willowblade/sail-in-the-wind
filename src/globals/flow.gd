@@ -1,7 +1,7 @@
 extends Node
 
 onready var menu = preload("res://src/menus/MainMenu.tscn")
-#onready var game = preload("res://src/game/Game.tscn")
+onready var game = preload("res://src/game/Game.tscn")
 
 
 func _ready():
@@ -9,8 +9,8 @@ func _ready():
 	
 func go_to_game():
 	AudioEngine.reset()
-	var game_scene = load("res://src/game/Game.tscn")
-	get_tree().change_scene_to(game_scene)
+
+	get_tree().change_scene_to(game)
 	UI.enable()
 	
 func go_to_main_menu():

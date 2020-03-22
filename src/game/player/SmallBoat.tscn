@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://assets/graphics/boat/small_boat_LR_1.png" type="Texture" id=1]
-[ext_resource path="res://src/game/player/player.gd" type="Script" id=2]
+[ext_resource path="res://src/game/player/small_boat.gd" type="Script" id=2]
 [ext_resource path="res://assets/graphics/boat/small_boat_LR_2.png" type="Texture" id=3]
 [ext_resource path="res://assets/graphics/boat/small_boat_N_1.png" type="Texture" id=4]
 [ext_resource path="res://assets/graphics/boat/small_boat_N_2.png" type="Texture" id=5]
 [ext_resource path="res://assets/graphics/boat/small_boat_S_2.png" type="Texture" id=6]
 [ext_resource path="res://assets/graphics/boat/small_boat_S_1.png" type="Texture" id=7]
+[ext_resource path="res://src/game/player/Waves.tres" type="SpriteFrames" id=8]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -29,17 +30,31 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 2.38002, 3.57032 )
 
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 11.0035, 10 )
+
 [node name="SmallBoat" type="KinematicBody2D"]
 script = ExtResource( 2 )
+
+[node name="Waves" type="AnimatedSprite" parent="."]
+position = Vector2( -12.9046, 0 )
+frames = ExtResource( 8 )
+animation = "horizontal"
+frame = 7
+playing = true
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 position = Vector2( -0.492912, -2.69357 )
 frames = SubResource( 1 )
 animation = "left-right"
-frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -0.0147249, 0.686914 )
 rotation = 1.56189
 shape = SubResource( 2 )
+
+[node name="BoatDetectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoatDetectionArea"]
+shape = SubResource( 3 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/ui/island_shop.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/ui/select.png" type="Texture" id=2]
@@ -12,12 +12,19 @@ margin_right = 48.0
 margin_top = 48.0
 margin_bottom = 48.0
 
-[sub_resource type="DynamicFontData" id=3]
+[sub_resource type="DynamicFontData" id=2]
 font_path = "res://assets/fonts/BLKCHCRY.TTF"
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=3]
 size = 26
-font_data = SubResource( 3 )
+font_data = SubResource( 2 )
+
+[sub_resource type="DynamicFontData" id=4]
+font_path = "res://assets/fonts/BLKCHCRY.TTF"
+
+[sub_resource type="DynamicFont" id=5]
+size = 18
+font_data = SubResource( 4 )
 
 [node name="IslandShop" type="Control"]
 anchor_right = 1.0
@@ -39,7 +46,7 @@ margin_left = 237.0
 margin_top = 121.107
 margin_right = 689.0
 margin_bottom = 161.107
-custom_fonts/normal_font = SubResource( 4 )
+custom_fonts/normal_font = SubResource( 3 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 bbcode_enabled = true
 bbcode_text = "[center][u]Ye olde shoppe[/u][/center]"
@@ -56,6 +63,18 @@ margin_right = 32.0
 margin_bottom = 32.0
 texture = ExtResource( 2 )
 expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 262.12
+margin_top = 412.738
+margin_right = 880.12
+margin_bottom = 441.738
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 0.533333 )
+text = "Tip: Press arrow keys to cycle through options and buy/sell"
 __meta__ = {
 "_edit_use_anchors_": false
 }

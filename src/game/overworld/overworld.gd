@@ -1,12 +1,13 @@
 extends Node2D
 
 
-onready var player = $Entities/LargeBoat
+onready var large_boat = $Entities/LargeBoat
 onready var islands = $Islands
 onready var camera = $Entities/LargeBoat/Camera
 onready var water = $Water
 
 onready var creation_tile_scene = preload("res://src/game/overworld/CreationTile.tscn")
+onready var small_boat_scene = preload("res://src/game/player/SmallBoat.tscn")
 
 export var audio_track: String = ""
 
@@ -14,7 +15,17 @@ var current_island: Island = null
 
 onready var _flag = $Flag
 
+onready var anchor = $Anchor
+
+var player_start
+
+var small_boat
+var player
+
 func _ready():
+	UI.start_game()
+	player = large_boat
+	player_start = player.position
 	if audio_track != "":
 		AudioEngine.play_sound(audio_track)
 		
@@ -31,14 +42,68 @@ func _ready():
 	UI.connect("island_named", self, "_on_island_named")
 	UI.connect("settle", self, "_on_settle_pressed")
 	UI.connect("new_player_name", self, "_on_new_player_name")
+	UI.stamina.connect("food_empty", self, "_on_food_empty")
 	if not GameState.game_state.get("player", {}).get("name"):
 		UI.show_decree()
+
+	player.connect("deploy_small_boat", self, "_on_deploy_small_boat")
+
+func _on_deploy_small_boat():
+	if small_boat != null:
+		print("There is already a small boat")
+		return
+	if current_island != null:
+		deploy_small_boat()
+
+func deploy_small_boat():
+	print("Deploying small_boat")
+	small_boat = small_boat_scene.instance()
+	$Entities.add_child(small_boat)
+	small_boat.position = player.position + Vector2(0, 16)
+	small_boat.connect("return_small_boat", self, "_on_return_small_boat")
+	large_boat.remove_child(camera)
+	small_boat.add_child(camera)
+	player = small_boat
+	large_boat.set_physics_process(false)
+
+func _on_return_small_boat():
+	return_small_boat()
+
+func return_small_boat():
+	small_boat.remove_child(camera)
+	large_boat.add_child(camera)
+	small_boat.queue_free()
+	$Entities.remove_child(small_boat)
+	small_boat = null
+	player = large_boat
+	large_boat.set_physics_process(true)
+
 		
-		
+func restart():
+	if small_boat:
+		return_small_boat()
+	player.position = player_start
+	GameState.game_state.inventory.contents = ["food", "food", "food", "wood", "wood"]
+	GameState.game_state.gold = 500
+	GameState.send_changed()
+
 func _on_new_player_name(new_player_data):
 	GameState.game_state["player"] = new_player_data
 	player.player_name = new_player_data.name
 	player.boat_name = new_player_data.boat_name
+
+
+func _on_food_empty():
+	Transitions.fade_to_opaque()
+	yield(Transitions, "transition_completed")
+	print("Is it complete?")
+	restart()
+	print("It should be complete")
+	player.set_physics_process(false)
+	Transitions.fade_to_transparant()
+	yield(Transitions, "transition_completed")
+	UI.show_restart_decree()
+	player.set_physics_process(true)
 		
 
 func draw_water_around_player():
@@ -53,7 +118,7 @@ func draw_water_around_player():
 		
 
 func _body_entered_island(island, body):
-	if body is Player:
+	if body is LargeBoat:
 		current_island = island
 		if island.audio_track != "":
 			AudioEngine.play_background_music(island.audio_track)
@@ -64,35 +129,57 @@ func _body_entered_island(island, body):
 	update()
 
 func _body_exited_island(island, body):
-	if body is Player:
+	if body is LargeBoat:
 		current_island = null
 		AudioEngine.play_background_music("res://")
 	update()
+	
+func show_anchor():
+	anchor.show()
+	anchor.position = player.position
+
+func hide_anchor():
+	anchor.hide()
 		
 func _physics_process(delta):
 	draw_water_around_player()
+
+	if Input.is_action_just_pressed("ui_map"):
+		UI.show_map(player)
+		return
 	
-	if current_island:
-		if current_island.settled:
-			update()
-			hide_flag()
-			return
-			
+	if current_island:			
 		var interactable_tiles = get_interactable_tiles()
 		if interactable_tiles != null:
-			show_flag(interactable_tiles["land"]["coordinates"])
+			if interactable_tiles.type == "settle":
+				if current_island.settled:
+					update()
+					hide_flag()
+					return
+				show_flag(interactable_tiles["land"]["coordinates"])
+			elif interactable_tiles.type == "settlement":
+				show_anchor()
+			elif interactable_tiles.type == "capital":
+				show_anchor()
+			else:
+				print("Unknown interaction")
+				print(interactable_tiles)
 	#		print(interactable_tiles)
 		else:
+			hide_anchor()
 			hide_flag()
 			
-		if _flag.visible:
-			if Input.is_action_just_pressed("ui_accept"):
+		if Input.is_action_just_pressed("ui_accept"):
+			if _flag.visible:
 				UI.settle()
+			elif anchor.visible:
+				if interactable_tiles.type == "capital":
+					UI.open_shop(current_island, true)
+				else:
+					UI.open_shop(current_island, false)
 		update()
 
-
 	
-
 
 func get_interactable_tiles():
 	var interact_position = player.global_position + 8 * player.direction
@@ -101,20 +188,40 @@ func get_interactable_tiles():
 		interact_position += 16 * player.direction
 		if current_island.has_island_tile_at_position(interact_position):
 			if current_island.tile_is_occupied(interact_position):
-				return
-			var land_tile = current_island.get_tile_at_position(interact_position)
-			if land_tile.name.begins_with("land"):
-				return {
-					"coast": coast_tile,
-					"land": land_tile,
-					"direction": player.direction,
-				}
+				var contents_tile = current_island.get_contents_tile(interact_position)
+				var contents_tile_name = contents_tile.tile_name
+				print(contents_tile_name)
+				if contents_tile_name.begins_with("capital_gate"):
+					print("Interacting with a capital")
+					return {
+						"type": "capital",
+						"contents": contents_tile
+					}
+				elif "settlement" in contents_tile_name:
+					return {
+						"type": "settlement",
+						"contents": contents_tile
+					}
+					print("Interacting with a settlement")
+			else:
+				var land_tile = current_island.get_tile_at_position(interact_position)
+				if land_tile.name.begins_with("land"):
+					return {
+						"type": "settle",
+						"coast": coast_tile,
+						"land": land_tile,
+						"direction": player.direction,
+					}
 					
 func _on_island_named(island_name: String):
 	current_island.island_name = island_name
 	UI.show_island_name(island_name)
+	GameState.add_gold(300)
 	
 func _on_settle_pressed():
+	if not GameState.has_item("wood", 1):
+		return
+	GameState.remove_item("wood")
 	current_island.settled = true
 	var interactable_tiles = get_interactable_tiles()
 	player.set_physics_process(false)
@@ -143,6 +250,7 @@ func _on_settle_pressed():
 	harbor_creation_tile.queue_free()
 	settlement_creation_tile.queue_free()
 	player.set_physics_process(true)
+	GameState.add_gold(500)
 	
 func _draw():
 	if current_island != null and GameState.DEBUG == true:

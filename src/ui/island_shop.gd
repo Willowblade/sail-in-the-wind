@@ -12,21 +12,25 @@ var marker_positions = []
 onready var shop_item_scene = preload("res://src/ui/ShopItem.tscn")
 onready var position = $Position2D
 
+var has_upgrades = false
+
+
 func _ready():
 	GameState.connect("updated_game_state", self, "_on_updated_game_state")
 	
 	if GameState.DEBUG:
-		var island_scene = load("res://src/game/islands/TestIsland.tscn")
-		var island = island_scene.instance()
-		add_child(island)
-		island.resource_type = "Wood"
-		island.inventory = {
-			"wood": 99999,
-			"food": 50,
-			"metal": 0,
-		}
-		
-		set_island(island)
+		pass
+#		var island_scene = load("res://src/game/islands/TestIsland.tscn")
+#		var island = island_scene.instance()
+#		add_child(island)
+#		island.resource_type = "Wood"
+#		island.inventory = {
+#			"wood": 99999,
+#			"food": 50,
+#			"metal": 0,
+#		}
+#
+#		set_island(island)
 		
 		
 #		set_items([{
@@ -49,14 +53,19 @@ func _ready():
 #			"sell_price": 1000,
 #		}])
 
+func close():
+	hide()
 
 func _physics_process(delta):
 	if not visible:
 		return
-		
+
 	if marker_positions.size() == 0:
 		return
-		
+
+	if Input.is_action_just_pressed("ui_focus_next"):
+		if has_upgrades:
+			UI.toggle_upgrades()
 	if Input.is_action_just_pressed("ui_left"):
 		var marker_position_index = marker_positions.find(marker.rect_position)
 		marker.rect_position = marker_positions[(marker_position_index + marker_positions.size() - 1) % marker_positions.size()]
@@ -75,7 +84,7 @@ func _physics_process(delta):
 		var shop_item = marker_locations[marker.rect_position]
 		var item_name = shop_item.properties.name
 		print(current_island.inventory)
-		if current_island.inventory[item_name] <= 0:
+		if current_island.inventory.get(item_name, 0) <= 0:
 			return
 		if GameState.has_enough_gold(shop_item.properties.buy_price):
 			if GameState.has_inventory_space():
@@ -115,7 +124,7 @@ func make_items():
 			island_items.append({
 				"name": item,
 				"player_quantity": player_inventory[item],
-				"island_quantity": current_island.inventory[item],
+				"island_quantity": current_island.inventory.get(item, 0),
 				"buy_price": price.buy_price,
 				"sell_price": price.sell_price,
 			})
@@ -171,9 +180,17 @@ func update_items():
 	
 func set_island(island: Island):
 	current_island = island
+	set_island_name(island.island_name)
 	items = make_items()
 	set_items(items)
 		
 
 func set_island_name(island_name: String):
 	town_shop_label.bbcode_text = "[center][u]Ye olde shoppe of " + island_name + "[/u][/center]"
+
+
+func add_upgrades():
+	has_upgrades = true
+
+func remove_upgrades():
+	has_upgrades = false

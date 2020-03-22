@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/ui/ui.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/EscapeMenu.tscn" type="PackedScene" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://src/ui/IslandShop.tscn" type="PackedScene" id=10]
 [ext_resource path="res://src/ui/ShipUpgrades.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/ui/Stamina.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/ui/RestartDecree.tscn" type="PackedScene" id=13]
+[ext_resource path="res://src/ui/Minimap.tscn" type="PackedScene" id=14]
 
 [sub_resource type="Animation" id=1]
 resource_name = "name_label"
@@ -160,8 +162,12 @@ visible = false
 margin_left = 35.0557
 margin_right = 75.0557
 
+[node name="RestartDecree" parent="." instance=ExtResource( 13 )]
+
 [node name="IslandShop" parent="." instance=ExtResource( 10 )]
 visible = false
 
 [node name="ShipUpgrades" parent="." instance=ExtResource( 11 )]
 visible = false
+
+[node name="Minimap" parent="." instance=ExtResource( 14 )]

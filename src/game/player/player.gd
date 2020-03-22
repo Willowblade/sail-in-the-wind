@@ -4,11 +4,9 @@ class_name Player
 onready var sprite: AnimatedSprite = $Sprite
 onready var waves: AnimatedSprite = $Waves
 
-
 signal interact
 
 var direction = Vector2(1, 0)
-
 
 const MOVEMENT_SPEED: float = 50.0
 
@@ -103,14 +101,15 @@ func set_direction(velocity: Vector2):
 	elif velocity.y > 0:
 		direction = Vector2(0, 1)
 	
+func player_specific(delta):
+	pass
 			
 func _physics_process(delta):
-	var velocity = Vector2(0, 0)
-	var speed_factor = 1.0
-	
-	if Input.is_action_pressed("sprint"):
-		speed_factor *= 2.0
+	player_specific(delta)
 
+	
+	var velocity = Vector2(0, 0)
+	var speed_factor = 1.0 + (0.1 * GameState.game_state.upgrades.speed)
 	
 	if Input.is_action_pressed("ui_left"):
 		velocity.x -= MOVEMENT_SPEED * speed_factor

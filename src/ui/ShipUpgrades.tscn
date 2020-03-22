@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/graphics/ui/ui_border.png" type="Texture" id=1]
 [ext_resource path="res://assets/graphics/ui/select.png" type="Texture" id=2]
@@ -22,6 +22,13 @@ font_path = "res://assets/fonts/BLKCHCRY.TTF"
 [sub_resource type="DynamicFont" id=3]
 size = 26
 font_data = SubResource( 2 )
+
+[sub_resource type="DynamicFontData" id=4]
+font_path = "res://assets/fonts/BLKCHCRY.TTF"
+
+[sub_resource type="DynamicFont" id=5]
+size = 18
+font_data = SubResource( 4 )
 
 [node name="ShipUpgrades" type="Control"]
 anchor_right = 1.0
@@ -106,6 +113,15 @@ upgrade_name = "small_boat"
 
 [node name="Image" parent="Upgrades/SmallBoat" index="0"]
 texture = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 244.374
+margin_top = 449.631
+margin_right = 716.374
+margin_bottom = 472.631
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 0.537255 )
+text = "Tip: Press arrow keys to cycle through options and Enter/X to buy"
 
 [editable path="Upgrades/InventorySpace"]
 

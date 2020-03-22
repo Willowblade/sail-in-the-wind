@@ -1,16 +1,15 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/fonts/main_font.tres" type="DynamicFont" id=1]
-[ext_resource path="res://assets/graphics/ui/royal_theme.png" type="Texture" id=2]
-[ext_resource path="res://assets/graphics/ui/frame-bottom.png" type="Texture" id=3]
+[ext_resource path="res://assets/graphics/ui/signature_xs.png" type="Texture" id=2]
+[ext_resource path="res://assets/graphics/ui/background.png" type="Texture" id=3]
 [ext_resource path="res://assets/graphics/ui/select.png" type="Texture" id=4]
-[ext_resource path="res://assets/graphics/ui/signature_xs.png" type="Texture" id=5]
-[ext_resource path="res://src/ui/decree.gd" type="Script" id=6]
-[ext_resource path="res://assets/graphics/ui/royal_stamp.png" type="Texture" id=7]
-[ext_resource path="res://assets/graphics/ui/background.png" type="Texture" id=8]
+[ext_resource path="res://src/ui/restart_decree.gd" type="Script" id=5]
+[ext_resource path="res://assets/graphics/ui/royal_stamp.png" type="Texture" id=6]
+[ext_resource path="res://assets/graphics/ui/royal_theme.png" type="Texture" id=7]
 
 [sub_resource type="StyleBoxTexture" id=1]
-texture = ExtResource( 2 )
+texture = ExtResource( 7 )
 region_rect = Rect2( 0, 0, 144, 144 )
 margin_left = 47.0
 margin_right = 47.0
@@ -24,30 +23,7 @@ font_path = "res://assets/fonts/BLKCHCRY.TTF"
 size = 28
 font_data = SubResource( 2 )
 
-[sub_resource type="StyleBoxTexture" id=4]
-texture = ExtResource( 3 )
-region_rect = Rect2( 0, 0, 16, 16 )
-
-[sub_resource type="StyleBoxTexture" id=5]
-texture = ExtResource( 3 )
-region_rect = Rect2( 0, 0, 16, 16 )
-
-[sub_resource type="StyleBoxTexture" id=6]
-texture = ExtResource( 3 )
-region_rect = Rect2( 0, 0, 16, 16 )
-
-[sub_resource type="StyleBoxTexture" id=7]
-texture = ExtResource( 3 )
-region_rect = Rect2( 0, 0, 16, 16 )
-
-[sub_resource type="DynamicFontData" id=8]
-font_path = "res://assets/fonts/BLKCHCRY.TTF"
-
-[sub_resource type="DynamicFont" id=9]
-size = 18
-font_data = SubResource( 8 )
-
-[node name="Decree" type="Control"]
+[node name="RestartDecree" type="Control"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -56,7 +32,7 @@ margin_left = -20.0
 margin_top = -20.0
 margin_right = 20.0
 margin_bottom = 20.0
-script = ExtResource( 6 )
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -66,7 +42,7 @@ margin_left = -566.0
 margin_top = -379.0
 margin_right = 672.0
 margin_bottom = 426.0
-texture = ExtResource( 8 )
+texture = ExtResource( 3 )
 expand = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -90,28 +66,37 @@ margin_bottom = 229.684
 custom_fonts/normal_font = ExtResource( 1 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 bbcode_enabled = true
-bbcode_text = "
-[center]Loyal servant of the Jerican Empire[/center]
+bbcode_text = "[center]Loyal servant of the Jerican Empire[/center]
+
+You idiot! What gives? Did you forget your role in the progress of our Great Nation?
+
+With the necromantic arts at our disposal, we were able to bring you back. Sailing this boat and discovering will be your eternal curse, but try to die as few times as possible... 
+
 
 As commanded by his Royal Highness Jerico, our colonial foundation needs expanding. You have been chosen as Lord Commander of the Exploratory Fleet, which you will lead. We've built you a ship. It should serve you well.
 
 Don't feel spoiled, however! You'll have to provide for your own supplies. You will be renumerated for your discoveries.
 
-Please sign this document to officially accept your duties as commander. You can optionally name your ship as well. If you don't, it will be named \"I'm A Boat\"."
-text = "
-Loyal servant of the Jerican Empire
+"
+text = "Loyal servant of the Jerican Empire
+
+You idiot! What gives? Did you forget your role in the progress of our Great Nation?
+
+With the necromantic arts at our disposal, we were able to bring you back. Sailing this boat and discovering will be your eternal curse, but try to die as few times as possible... 
+
 
 As commanded by his Royal Highness Jerico, our colonial foundation needs expanding. You have been chosen as Lord Commander of the Exploratory Fleet, which you will lead. We've built you a ship. It should serve you well.
 
 Don't feel spoiled, however! You'll have to provide for your own supplies. You will be renumerated for your discoveries.
 
-Please sign this document to officially accept your duties as commander. You can optionally name your ship as well. If you don't, it will be named \"I'm A Boat\"."
+"
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Date" type="RichTextLabel" parent="."]
+visible = false
 margin_left = -294.336
 margin_top = -239.3
 margin_right = 231.664
@@ -126,6 +111,7 @@ __meta__ = {
 }
 
 [node name="RoyalDecree" type="RichTextLabel" parent="."]
+visible = false
 margin_left = -285.568
 margin_top = -239.0
 margin_right = 227.432
@@ -140,40 +126,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Name" type="LineEdit" parent="."]
-margin_left = -277.361
-margin_top = 233.515
-margin_right = -80.3613
-margin_bottom = 285.515
-custom_styles/focus = SubResource( 4 )
-custom_styles/normal = SubResource( 5 )
-custom_fonts/font = ExtResource( 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/clear_button_color = Color( 0, 0, 0, 1 )
-max_length = 30
-placeholder_text = "Your name..."
-caret_blink = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="BoatName" type="LineEdit" parent="."]
-margin_left = -42.2118
-margin_top = 232.611
-margin_right = 125.788
-margin_bottom = 284.611
-custom_styles/focus = SubResource( 6 )
-custom_styles/normal = SubResource( 7 )
-custom_fonts/font = ExtResource( 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-max_length = 30
-expand_to_text_length = true
-placeholder_text = "Boat name..."
-caret_blink = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Marker" type="TextureRect" parent="."]
 margin_left = 160.0
 margin_top = 240.0
@@ -184,10 +136,10 @@ expand = true
 
 [node name="SuccessIcon" type="TextureRect" parent="."]
 margin_left = 188.893
-margin_top = 233.342
+margin_top = 236.403
 margin_right = 236.893
-margin_bottom = 281.342
-texture = ExtResource( 5 )
+margin_bottom = 284.403
+texture = ExtResource( 2 )
 expand = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -198,14 +150,5 @@ margin_left = 234.599
 margin_top = 249.008
 margin_right = 282.599
 margin_bottom = 297.008
-texture = ExtResource( 7 )
+texture = ExtResource( 6 )
 expand = true
-
-[node name="Label" type="Label" parent="."]
-margin_left = -277.928
-margin_top = 282.331
-margin_right = 210.072
-margin_bottom = 305.331
-custom_fonts/font = SubResource( 9 )
-custom_colors/font_color = Color( 0, 0, 0, 0.368627 )
-text = "PS: press Tab or Square button on controller to cycle through options"

@@ -28,7 +28,10 @@ func _physics_process(delta):
 		
 	if marker_positions.size() == 0:
 		return
-		
+	
+	if Input.is_action_just_pressed("ui_focus_next"):
+			UI.toggle_upgrades()
+
 	if Input.is_action_just_pressed("ui_left"):
 		var marker_position_index = marker_positions.find(marker.rect_position)
 		marker.rect_position = marker_positions[(marker_position_index + marker_positions.size() - 1) % marker_positions.size()]

@@ -1,14 +1,14 @@
 extends Node
 
 var game_state = {
-	"gold": 100,
+	"gold": 500,
 	"player": {
-		# "name": "Testyman",
-		# "boat_name": "My main boaty!",
+		"name": "Testyman",
+		"boat_name": "My main boaty!",
 	},
 	"inventory": {
 		"space": 6,
-		"contents": ["food", "wood", "metal"]
+		"contents": ["food", "food", "wood", "wood", "metal"]
 	},
 	"upgrades": {
 		"speed": 0,
@@ -23,7 +23,14 @@ var DEBUG = true
 signal updated_game_state(game_state)
 
 
-const TIME_PER_FOOD = 180.0
+var minimap_scale = 10
+const TIME_PER_FOOD = 75.0
+
+func all_islands_explored():
+	for island in get_tree().get_nodes_in_group("island"):
+		if not island.island_name:
+			return false
+	return true
 
 func get_food_rate():
 	return 1.0 / TIME_PER_FOOD / sqrt(game_state.upgrades.stamina + 1)
@@ -72,6 +79,7 @@ func has_enough_gold(gold: int):
 
 func send_changed():
 	emit_signal("updated_game_state")
+	
 
 func _ready():
 	AudioEngine.set_master_volume(0.6)

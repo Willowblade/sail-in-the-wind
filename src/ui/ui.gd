@@ -10,8 +10,10 @@ onready var gold_count = $GoldCount
 onready var stamina = $Stamina
 onready var ship_upgrades = $ShipUpgrades
 onready var island_shop = $IslandShop
+onready var minimap = $Minimap
 
 onready var decree = $Decree
+onready var restart_decree = $RestartDecree
 
 onready var menus = {
 	"escape": get_node("EscapeMenu")
@@ -37,6 +39,36 @@ func resume_game():
 	get_tree().paused = false
 	stamina.play()
 
+func open_shop(island: Island, is_capital: bool):
+	pause_game()
+	island_shop.set_island(island)
+	island_shop.show()
+	ship_upgrades.set_physics_process(false)
+	island_shop.set_physics_process(true)
+	if is_capital:
+		island_shop.add_upgrades()
+	else:
+		island_shop.remove_upgrades()
+		
+func close_shops():
+	island_shop.hide()
+	ship_upgrades.hide()
+	ship_upgrades.set_physics_process(false)
+	island_shop.set_physics_process(false)
+	resume_game()
+	
+func toggle_upgrades():
+	if island_shop.visible:
+		island_shop.hide()
+		ship_upgrades.show()
+		ship_upgrades.set_physics_process(true)
+		island_shop.set_physics_process(false)
+	else:
+		island_shop.show()
+		ship_upgrades.hide()
+		ship_upgrades.set_physics_process(false)
+		island_shop.set_physics_process(true)
+
 func _ready():
 	disable()
 	
@@ -52,32 +84,54 @@ func _ready():
 
 	name_island_dialog.connect("popup_hide", self, "_on_name_island_closed")
 	island_name_view.show()
-	inventory.show()
+
 
 	decree.connect("done", self, "_on_decree_done")
+	restart_decree.connect("done", self, "_on_restart_decree_done")
 	on_updated_game_state()
-	gold_count.show()
-	
-	stamina.show()
 	
 	if GameState.DEBUG == true:
 		enable()
+		
+func start_game():
+	inventory.show()
+	gold_count.show()
+	stamina.show()
+	stamina.play()
+	
+		
+func stop_game():
+	inventory.hide()
+	gold_count.hide()
+	stamina.hide()
+	stamina.pause()
 
 	
 func on_updated_game_state():
 	gold_count.get_node("Label").text = ": " + str(GameState.game_state["gold"])
 	
+func _on_restart_decree_done():
+	resume_game()
+	restart_decree.hide()
+	restart_decree.set_physics_process(false)
+	
 func _on_decree_done(decree_data):
-	get_tree().paused = false
+	resume_game()
 	decree.hide()
 	decree.set_physics_process(false)
 	emit_signal("new_player_name", decree_data)
 	
 func show_decree():
+	pause_game()
 	decree.show()
 	decree.activate()
 	decree.set_physics_process(true)
-	resume_game()
+
+func show_restart_decree():
+	restart_decree.show()
+	restart_decree.activate()
+	restart_decree.set_physics_process(true)
+	pause_game()
 
 func enable():
 	enabled = true
@@ -113,7 +167,22 @@ func _on_close_ui(menu):
 #		for open_ui in open_uis:
 #			if open_ui.should_pause:
 #				return
-		
+
+func close_settle_dialog():
+	pass
+
+
+
+func show_map(player):
+	pause_game()
+	minimap.load_islands(player)
+	minimap.show()
+
+
+func hide_map():
+	minimap.hide()
+	resume_game()
+
 
 func _input(event):
 	if not enabled:
@@ -125,17 +194,25 @@ func _input(event):
 			# have to name the island. Box still needs theming!
 			pass
 		elif settle_dialog.visible:
-			settle_dialog.close()
+			close_settle_dialog()
+		elif minimap.visible:
+			hide_map()
 		elif ship_upgrades.visible:
-			ship_upgrades.close()
+			close_shops()
 		elif island_shop.visible:
-			island_shop.close()
+			close_shops()
 		elif decree.visible:
 			pass
 		else:
-			open_ui("escape")
+			pass
+#			open_ui("escape")
 
-	if Input.is_key_pressed(KEY_1): 
+	# elif Input.is_action_just_pressed("ui_map"):
+	# 	if minimap.visible:
+	# 		print("Closing minimap")
+	# 		hide_map()
+
+	elif Input.is_key_pressed(KEY_1): 
 		if button_pressed != KEY_1:
 			GameState.add_gold(100)
 		button_pressed = KEY_1
@@ -190,7 +267,7 @@ func show_island_name(island_name: String):
 	animation_player.play("name_label")
 	
 func show_name_island_dialog():
-	resume_game()
+	pause_game()
 	name_island_dialog.popup_centered()
 	
 func _on_name_island_closed():

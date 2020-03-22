@@ -1,0 +1,104 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://src/ui/minimap.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/main_font.tres" type="DynamicFont" id=2]
+[ext_resource path="res://src/ui/island_circles.gd" type="Script" id=3]
+[ext_resource path="res://assets/graphics/ui/scroll_v2.png" type="Texture" id=5]
+[ext_resource path="res://assets/graphics/ui/background.png" type="Texture" id=6]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 144, 144 )
+margin_left = 47.0
+margin_right = 47.0
+margin_top = 47.0
+margin_bottom = 47.0
+
+[sub_resource type="DynamicFontData" id=2]
+font_path = "res://assets/fonts/BLKCHCRY.TTF"
+
+[sub_resource type="DynamicFont" id=3]
+size = 28
+font_data = SubResource( 2 )
+
+[sub_resource type="DynamicFontData" id=4]
+font_path = "res://assets/fonts/BLKCHCRY.TTF"
+
+[sub_resource type="DynamicFont" id=5]
+size = 18
+font_data = SubResource( 4 )
+
+[node name="Minimap" type="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackgroundColor" type="TextureRect" parent="."]
+margin_left = -566.0
+margin_top = -379.0
+margin_right = 672.0
+margin_bottom = 426.0
+texture = ExtResource( 6 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="Panel" parent="."]
+margin_left = -397.0
+margin_top = -272.0
+margin_right = 364.0
+margin_bottom = 299.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoyalDecree" type="RichTextLabel" parent="."]
+margin_left = -285.568
+margin_top = -239.0
+margin_right = 227.432
+margin_bottom = 188.0
+custom_fonts/bold_font = ExtResource( 2 )
+custom_fonts/normal_font = SubResource( 3 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
+bbcode_text = "[center]Map[/center]"
+text = "Map"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = -277.928
+margin_top = 282.331
+margin_right = 210.072
+margin_bottom = 305.331
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 0.368627 )
+text = "PS: press Tab or Square button on controller to cycle through options"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IslandCircles" type="Node2D" parent="."]
+position = Vector2( -34.8591, 30.2454 )
+script = ExtResource( 3 )
+
+[node name="Labels" type="Control" parent="."]
+margin_left = -16.3226
+margin_top = 7.00818
+margin_right = 23.6774
+margin_bottom = 47.0082
+__meta__ = {
+"_edit_use_anchors_": false
+}
