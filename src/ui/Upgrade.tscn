@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/ui/upgrade.gd" type="Script" id=1]
+[ext_resource path="res://assets/graphics/ui/item-rect.png" type="Texture" id=2]
+[ext_resource path="res://assets/fonts/main_font.tres" type="DynamicFont" id=3]
+
+[node name="Upgrade" type="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+
+[node name="Image" type="TextureRect" parent="."]
+margin_right = 48.0
+margin_bottom = 48.0
+texture = ExtResource( 2 )
+expand = true
+
+[node name="Description" type="RichTextLabel" parent="."]
+margin_left = -175.0
+margin_top = 51.0
+margin_right = 224.0
+margin_bottom = 174.0
+custom_fonts/normal_font = ExtResource( 3 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
+bbcode_text = "[center]Hello[/center]
+"
+text = "Hello
+"
+scroll_active = false
+
+[node name="Price" type="RichTextLabel" parent="."]
+margin_left = -208.0
+margin_top = -49.0
+margin_right = 253.0
+margin_bottom = -11.0
+custom_fonts/normal_font = ExtResource( 3 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
+bbcode_text = "[center]Price: 500g[/center]"
+text = "Price: 500g"

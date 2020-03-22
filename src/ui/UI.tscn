@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/ui/ui.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/EscapeMenu.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://src/ui/Decree.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/fonts/main_font.tres" type="DynamicFont" id=8]
 [ext_resource path="res://assets/graphics/decorations/gold_resource.png" type="Texture" id=9]
+[ext_resource path="res://src/ui/IslandShop.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/ui/ShipUpgrades.tscn" type="PackedScene" id=11]
 
 [sub_resource type="Animation" id=1]
 resource_name = "name_label"
@@ -115,14 +117,10 @@ __meta__ = {
 }
 
 [node name="Inventory" parent="." instance=ExtResource( 6 )]
-margin_left = 73.2272
+margin_left = 241.884
 margin_top = 270.454
-margin_right = 113.227
+margin_right = 281.883
 margin_bottom = 310.454
-
-[node name="Decree" parent="." instance=ExtResource( 7 )]
-margin_left = 35.0557
-margin_right = 75.0557
 
 [node name="GoldCount" type="Control" parent="."]
 margin_right = 40.0
@@ -149,3 +147,14 @@ margin_right = 52.2047
 margin_bottom = 588.306
 texture = ExtResource( 9 )
 expand = true
+
+[node name="Decree" parent="." instance=ExtResource( 7 )]
+visible = false
+margin_left = 35.0557
+margin_right = 75.0557
+
+[node name="IslandShop" parent="." instance=ExtResource( 10 )]
+visible = false
+
+[node name="ShipUpgrades" parent="." instance=ExtResource( 11 )]
+visible = false

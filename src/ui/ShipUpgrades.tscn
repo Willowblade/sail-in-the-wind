@@ -1,0 +1,116 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/graphics/ui/ui_border.png" type="Texture" id=1]
+[ext_resource path="res://assets/graphics/ui/select.png" type="Texture" id=2]
+[ext_resource path="res://src/ui/ship_upgrades.gd" type="Script" id=3]
+[ext_resource path="res://src/ui/Upgrade.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/graphics/decorations/food.png" type="Texture" id=5]
+[ext_resource path="res://assets/graphics/boat/small_boat_LR_1.png" type="Texture" id=6]
+[ext_resource path="res://assets/graphics/ui/speedup.png" type="Texture" id=7]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 144, 144 )
+margin_left = 48.0
+margin_right = 48.0
+margin_top = 48.0
+margin_bottom = 48.0
+
+[sub_resource type="DynamicFontData" id=3]
+font_path = "res://assets/fonts/BLKCHCRY.TTF"
+
+[sub_resource type="DynamicFont" id=4]
+size = 26
+font_data = SubResource( 3 )
+
+[node name="ShipUpgrades" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_left = 121.0
+margin_top = 35.0
+margin_right = 842.0
+margin_bottom = 488.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="TownShopLabel" type="RichTextLabel" parent="."]
+margin_left = 237.0
+margin_top = 94.2728
+margin_right = 689.0
+margin_bottom = 134.273
+custom_fonts/normal_font = SubResource( 4 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
+bbcode_text = "[center][u]Ye olde shippeyard[/u][/center]"
+text = "Ye olde shippeyard"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Marker" type="TextureRect" parent="."]
+margin_right = 32.0
+margin_bottom = 32.0
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Upgrades" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InventorySpace" parent="Upgrades" instance=ExtResource( 4 )]
+margin_left = 213.354
+margin_top = 212.092
+margin_right = 253.354
+margin_bottom = 252.092
+max_charges = 6
+
+[node name="Speed" parent="Upgrades" instance=ExtResource( 4 )]
+margin_left = 360.297
+margin_top = 213.779
+margin_right = 400.297
+margin_bottom = 253.779
+upgrade_name = "speed"
+max_charges = 3
+
+[node name="Image" parent="Upgrades/Speed" index="0"]
+texture = ExtResource( 7 )
+
+[node name="Stamina" parent="Upgrades" instance=ExtResource( 4 )]
+margin_left = 525.993
+margin_top = 214.645
+margin_right = 565.993
+margin_bottom = 254.645
+upgrade_name = "stamina"
+max_charges = 3
+
+[node name="Image" parent="Upgrades/Stamina" index="0"]
+texture = ExtResource( 5 )
+
+[node name="SmallBoat" parent="Upgrades" instance=ExtResource( 4 )]
+margin_left = 681.914
+margin_top = 215.046
+margin_right = 721.914
+margin_bottom = 255.046
+upgrade_name = "small_boat"
+
+[node name="Image" parent="Upgrades/SmallBoat" index="0"]
+texture = ExtResource( 6 )
+
+[editable path="Upgrades/InventorySpace"]
+
+[editable path="Upgrades/Speed"]
+
+[editable path="Upgrades/Stamina"]
+
+[editable path="Upgrades/SmallBoat"]

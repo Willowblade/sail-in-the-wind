@@ -37,9 +37,10 @@ func set_frames():
 
 	frames = []
 	var space = get_space()
+	var offset = -Vector2(52, 0) * 0.5 * (space - 1)
 	for i in range(space):
 		var frame = create_frame()
-		frame.rect_position = rect_position + i * Vector2(52, 0)
+		frame.rect_position = rect_position + offset + i * Vector2(52, 0)
 		frames.append(frame)
 		
 func set_contents():

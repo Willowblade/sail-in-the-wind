@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/fonts/main_font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/graphics/ui/royal_theme.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/graphics/ui/signature_xs.png" type="Texture" id=5]
 [ext_resource path="res://src/ui/decree.gd" type="Script" id=6]
 [ext_resource path="res://assets/graphics/ui/royal_stamp.png" type="Texture" id=7]
+[ext_resource path="res://assets/graphics/ui/background.png" type="Texture" id=8]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 2 )
@@ -49,6 +50,17 @@ margin_top = -20.0
 margin_right = 20.0
 margin_bottom = 20.0
 script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackgroundColor" type="TextureRect" parent="."]
+margin_left = -566.0
+margin_top = -379.0
+margin_right = 672.0
+margin_bottom = 426.0
+texture = ExtResource( 8 )
+expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -174,7 +186,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Seal" type="TextureRect" parent="."]
 margin_left = 234.599
 margin_top = 249.008
 margin_right = 282.599

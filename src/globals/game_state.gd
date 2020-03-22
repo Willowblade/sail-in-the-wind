@@ -7,9 +7,15 @@ var game_state = {
 		# "boat_name": "My main boaty!",
 	},
 	"inventory": {
-		"space": 3,
+		"space": 6,
 		"contents": ["food", "wood", "metal"]
 	},
+	"upgrades": {
+		"speed": 0,
+		"stamina": 0,
+		"inventory": 0,
+		"small_boat": 0,
+	}
 }
 
 var DEBUG = true
