@@ -7,12 +7,14 @@ onready var area = $Area
 onready var coast = $AnimatedCoasts
 
 var _base_cell_names = {}
+# this mapping isn't used right now?
 var _contents_cell_names = {}
 var settled = false
 var inventory = {}
 var level = 1
 # how to solve this little issue? Timer to increase gold?
 var gold = 0
+# is to be expanded...
 var needed = {}
 
 var discovered_by = ""
@@ -22,6 +24,7 @@ export(String, "None", "Wood", "Metal", "Food") var resource_type = "None"
 export(String, "None", "Wood", "Metal", "Food") var second_resource_type = "None"
 export(String, FILE, "*.ogg") var audio_track = ""
 export var island_name = ""
+export (String, MULTILINE) var description = ""
 
 var map_offset
 
@@ -30,15 +33,17 @@ signal island_exited(island, body)
 
 
 const ECONOMY = {
-	"food": 20,
-	"wood": 80,
-	"metal": 320,
+	"food": 50,
+	"wood": 200,
+	"metal": 600,
 }
 
 
 func _ready():
 	map_offset = Vector2(randf() - 0.5, randf() - 0.5)
 	if capital:
+		settled = true
+	if island_name == "Tutorial Islands":
 		settled = true
 	_base_cell_names = get_tile_mapping(base)
 	_contents_cell_names = get_tile_mapping(contents)
@@ -65,30 +70,34 @@ func _ready():
 
 
 func get_prices(item_name: String):
+	var sell_modifier = 1.0
 	var buy_modifier = 1.0
 	if item_name == resource_type.to_lower():
+		sell_modifier = 0.3
 		buy_modifier = 0.5
 	elif item_name == second_resource_type.to_lower():
-		buy_modifier = 0.8
-	elif item_name in needed:
+		sell_modifier = 0.45
+		buy_modifier = 0.6
+	else:
 		buy_modifier = 3.0
+		sell_modifier = 2.0
 	
 	if capital:
-		buy_modifier = 0.7
+		sell_modifier = 0.8
+		buy_modifier = 0.8
 
 	return {
-		"buy_price": 2 * 1.0 / sqrt(level) * ECONOMY[item_name] * buy_modifier,
-		"sell_price": 1.0 / sqrt(level) * ECONOMY[item_name] * buy_modifier
+		"buy_price": int(1.0 / sqrt(level) * ECONOMY[item_name] * buy_modifier),
+		"sell_price": int(1.0 / sqrt(level) * ECONOMY[item_name] * sell_modifier)
 	}
-
 
 func get_tile_mapping(tilemap: TileMap) -> Dictionary:
 	var mapping = {}
-	var used_cells = base.get_used_cells()
+	var used_cells = tilemap.get_used_cells()
 	for cell in used_cells:
-		var id = base.get_cell(cell[0], cell[1])
-		var name = base.tile_set.tile_get_name(id)
-		_base_cell_names[id] = name
+		var id = tilemap.get_cell(cell[0], cell[1])
+		var name = tilemap.tile_set.tile_get_name(id)
+		mapping[id] = name
 	return mapping
 
 

@@ -16,7 +16,7 @@ func get_contents() -> Array:
 	return GameState.game_state.inventory.contents
 
 func get_space() -> Array:
-	return GameState.game_state.inventory.space
+	return GameState.game_state.inventory.space + GameState.game_state.upgrades.inventory
 
 func on_updated_game_state():
 	var new_frames = get_space()
@@ -31,12 +31,14 @@ func create_frame():
 	return frame
 	
 func set_frames():
+	print("setting frames")
 	for frame in frames:
 #		remove_child(frame)
 		frame.queue_free()
 
 	frames = []
 	var space = get_space()
+	print(space)
 	var offset = -Vector2(52, 0) * 0.5 * (space - 1)
 	for i in range(space):
 		var frame = create_frame()

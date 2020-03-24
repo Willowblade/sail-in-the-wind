@@ -22,12 +22,19 @@ var player_start
 var small_boat
 var player
 
+var current_track: String
+
+signal in_island(is_in_island)
+signal interacting(is_interacting)
+signal founding(is_founding)
+
 func _ready():
 	UI.start_game()
+	current_track = "res://assets/audio/sea.ogg"
 	player = large_boat
 	player_start = player.position
 	if audio_track != "":
-		AudioEngine.play_sound(audio_track)
+		AudioEngine.play_background_music(audio_track)
 		
 #	for interaction in get_tree().get_nodes_in_group("interactive"):
 #		player.connect("interact", interaction, "_on_player_interacted")
@@ -38,7 +45,10 @@ func _ready():
 	for island in islands.get_children():
 		island.connect("island_entered", self, "_body_entered_island")
 		island.connect("island_exited", self, "_body_exited_island")
-		
+	
+	connect("founding", UI, "_on_founding")
+	connect("in_island", UI, "_on_in_island")
+	connect("interacting", UI, "_on_interacting")
 	UI.connect("island_named", self, "_on_island_named")
 	UI.connect("settle", self, "_on_settle_pressed")
 	UI.connect("new_player_name", self, "_on_new_player_name")
@@ -49,6 +59,8 @@ func _ready():
 	player.connect("deploy_small_boat", self, "_on_deploy_small_boat")
 
 func _on_deploy_small_boat():
+	# TODO CLEAN
+	UI.controls.get_node("Boat").hide() # it just gets uglier...
 	if small_boat != null:
 		print("There is already a small boat")
 		return
@@ -56,7 +68,6 @@ func _on_deploy_small_boat():
 		deploy_small_boat()
 
 func deploy_small_boat():
-	print("Deploying small_boat")
 	small_boat = small_boat_scene.instance()
 	$Entities.add_child(small_boat)
 	small_boat.position = player.position + Vector2(0, 16)
@@ -77,7 +88,8 @@ func return_small_boat():
 	small_boat = null
 	player = large_boat
 	large_boat.set_physics_process(true)
-
+	# TODO CLEAN
+	UI.controls.get_node("Boat").show() # it just gets uglier...
 		
 func restart():
 	if small_boat:
@@ -92,19 +104,15 @@ func _on_new_player_name(new_player_data):
 	player.player_name = new_player_data.name
 	player.boat_name = new_player_data.boat_name
 
-
 func _on_food_empty():
 	Transitions.fade_to_opaque()
 	yield(Transitions, "transition_completed")
-	print("Is it complete?")
 	restart()
-	print("It should be complete")
 	player.set_physics_process(false)
 	Transitions.fade_to_transparant()
 	yield(Transitions, "transition_completed")
 	UI.show_restart_decree()
 	player.set_physics_process(true)
-		
 
 func draw_water_around_player():
 	water.clear()
@@ -115,24 +123,25 @@ func draw_water_around_player():
 			var tile_position = water.world_to_map(player.position + Vector2(x * 16, y * 16))
 			water.set_cellv(tile_position, water_tile_id)
 
-		
-
 func _body_entered_island(island, body):
 	if body is LargeBoat:
 		current_island = island
-		print(current_island.audio_track)
 		if current_island.audio_track != "":
-			AudioEngine.play_background_music(current_island.audio_track)
+			current_track = current_island.audio_track
+			AudioEngine.play_background_music(current_track)
 		if current_island.island_name != "":
 			UI.show_island_name(current_island.island_name)
 		else:
-			UI.show_name_island_dialog()
+			UI.show_name_island(current_island)
+		emit_signal("in_island", true)
 	update()
 
 func _body_exited_island(island, body):
 	if body is LargeBoat:
 		current_island = null
-		AudioEngine.play_background_music("res://assets/audio/sea.ogg")
+		current_track = "res://assets/audio/sea.ogg"
+		AudioEngine.play_background_music(current_track)
+		emit_signal("in_island", false)
 	update()
 	
 func show_anchor():
@@ -143,6 +152,8 @@ func hide_anchor():
 	anchor.hide()
 		
 func _physics_process(delta):
+	AudioEngine.play_background_music(current_track)
+	UI.update_minimap(player)
 	draw_water_around_player()
 
 	if Input.is_action_just_pressed("ui_map"):
@@ -154,25 +165,32 @@ func _physics_process(delta):
 		if interactable_tiles != null:
 			if interactable_tiles.type == "settle":
 				if current_island.settled:
+					emit_signal("founding", false)
 					update()
 					hide_flag()
 					return
 				show_flag(interactable_tiles["land"]["coordinates"])
+				emit_signal("founding", true)
 			elif interactable_tiles.type == "settlement":
 				show_anchor()
+				emit_signal("interacting", true)
 			elif interactable_tiles.type == "capital":
 				show_anchor()
+				emit_signal("interacting", true)
 			else:
 				print("Unknown interaction")
 				print(interactable_tiles)
 	#		print(interactable_tiles)
 		else:
+			emit_signal("founding", false)
+			emit_signal("interacting", false)
 			hide_anchor()
 			hide_flag()
 			
 		if Input.is_action_just_pressed("ui_accept"):
 			if _flag.visible:
-				UI.settle()
+				UI.open_settle()
+				emit_signal("founding", false)
 			elif anchor.visible:
 				if interactable_tiles.type == "capital":
 					UI.open_shop(current_island, true)
@@ -191,7 +209,6 @@ func get_interactable_tiles():
 			if current_island.tile_is_occupied(interact_position):
 				var contents_tile = current_island.get_contents_tile(interact_position)
 				var contents_tile_name = contents_tile.tile_name
-				print(contents_tile_name)
 				if contents_tile_name.begins_with("capital_gate"):
 					return {
 						"type": "capital",
@@ -202,7 +219,6 @@ func get_interactable_tiles():
 						"type": "settlement",
 						"contents": contents_tile
 					}
-					print("Interacting with a settlement")
 			else:
 				var land_tile = current_island.get_tile_at_position(interact_position)
 				if land_tile.name.begins_with("land"):
@@ -260,6 +276,8 @@ func _draw():
 		draw_circle(player.global_position + 24 * player.direction, 1, Color(1, 1, 1))
 		
 func show_flag(coordinates: Vector2):
+	if not _flag.visible:
+		AudioEngine.play_effect("res://assets/audio/sfx/navigation/flag_on.ogg")
 	_flag.global_position = coordinates
 	_flag.show()
 	

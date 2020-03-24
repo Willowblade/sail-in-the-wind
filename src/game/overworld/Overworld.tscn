@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://src/game/overworld/overworld.gd" type="Script" id=1]
 [ext_resource path="res://src/game/islands/Island - S - WS.tscn" type="PackedScene" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://src/game/islands/CuteSmallIsland.tscn" type="PackedScene" id=17]
 [ext_resource path="res://src/game/islands/Island - E- WF.tscn" type="PackedScene" id=18]
 [ext_resource path="res://src/game/islands/Island - H - WF.tscn" type="PackedScene" id=19]
+[ext_resource path="res://src/game/islands/TutorialIsland.tscn" type="PackedScene" id=20]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -35,7 +36,7 @@ script = ExtResource( 1 )
 z_index = 1
 
 [node name="LargeBoat" parent="Entities" instance=ExtResource( 4 )]
-position = Vector2( -162.488, 324.351 )
+position = Vector2( -149.523, 314.994 )
 
 [node name="Camera" type="Camera2D" parent="Entities/LargeBoat"]
 current = true
@@ -48,31 +49,35 @@ z_index = -1
 position = Vector2( -11.1668, 240.184 )
 
 [node name="CuteSmallIsland" parent="Islands" instance=ExtResource( 17 )]
-position = Vector2( -889.855, -244.498 )
+position = Vector2( -948.296, -275.667 )
 
 [node name="Island - E - FW" parent="Islands" instance=ExtResource( 15 )]
-position = Vector2( 2098.73, -69.4724 )
+position = Vector2( 877.107, -378.784 )
 
 [node name="Island - E- WF" parent="Islands" instance=ExtResource( 18 )]
-position = Vector2( 998.009, 1386.01 )
+position = Vector2( 1014.71, 971.802 )
 
 [node name="Island - H - SF" parent="Islands" instance=ExtResource( 13 )]
-position = Vector2( 3201.96, -2004.51 )
+position = Vector2( 203.158, 1985.26 )
 
 [node name="Island - E - WF" parent="Islands" instance=ExtResource( 19 )]
-position = Vector2( -3512.66, -2031.25 )
+position = Vector2( -2043.26, 322.607 )
 
 [node name="Island - H - WM" parent="Islands" instance=ExtResource( 5 )]
-position = Vector2( -4386.34, 1401.52 )
+position = Vector2( -591.962, 1164.83 )
 
 [node name="Island - M - FW" parent="Islands" instance=ExtResource( 16 )]
-position = Vector2( 4995.08, 2429.94 )
+position = Vector2( -1854.2, -811.587 )
 
 [node name="Island - M - WF" parent="Islands" instance=ExtResource( 14 )]
-position = Vector2( -504.923, -2941.3 )
+position = Vector2( 146.499, -1109.18 )
 
 [node name="Island - S - WS" parent="Islands" instance=ExtResource( 2 )]
-position = Vector2( -4972.49, -484.403 )
+position = Vector2( -1785.51, 1346.75 )
+
+[node name="TutorialIsland" parent="Islands" instance=ExtResource( 20 )]
+position = Vector2( -550.45, 236.18 )
+resource_type = "Wood"
 
 [node name="Clouds" parent="." instance=ExtResource( 3 )]
 z_index = 2
@@ -80,7 +85,7 @@ z_index = 2
 [node name="Flag" type="AnimatedSprite" parent="."]
 visible = false
 frames = SubResource( 1 )
-frame = 1
+frame = 3
 playing = true
 offset = Vector2( 8, 8 )
 

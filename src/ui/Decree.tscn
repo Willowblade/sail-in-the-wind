@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://assets/fonts/main_font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/graphics/ui/royal_theme.png" type="Texture" id=2]
@@ -8,6 +8,9 @@
 [ext_resource path="res://src/ui/decree.gd" type="Script" id=6]
 [ext_resource path="res://assets/graphics/ui/royal_stamp.png" type="Texture" id=7]
 [ext_resource path="res://assets/graphics/ui/background.png" type="Texture" id=8]
+[ext_resource path="res://src/ui/ControlsTip.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/graphics/ui/keyboard/key_enter.png" type="Texture" id=10]
+[ext_resource path="res://assets/graphics/ui/playstation/playstation1.png" type="Texture" id=11]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 2 )
@@ -24,6 +27,10 @@ font_path = "res://assets/fonts/BLKCHCRY.TTF"
 size = 28
 font_data = SubResource( 2 )
 
+[sub_resource type="StyleBoxTexture" id=8]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 16, 16 )
+
 [sub_resource type="StyleBoxTexture" id=4]
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 16, 16 )
@@ -39,13 +46,6 @@ region_rect = Rect2( 0, 0, 16, 16 )
 [sub_resource type="StyleBoxTexture" id=7]
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 16, 16 )
-
-[sub_resource type="DynamicFontData" id=8]
-font_path = "res://assets/fonts/BLKCHCRY.TTF"
-
-[sub_resource type="DynamicFont" id=9]
-size = 18
-font_data = SubResource( 8 )
 
 [node name="Decree" type="Control"]
 anchor_left = 0.5
@@ -145,12 +145,15 @@ margin_left = -277.361
 margin_top = 233.515
 margin_right = -80.3613
 margin_bottom = 285.515
+mouse_filter = 2
+custom_styles/read_only = SubResource( 8 )
 custom_styles/focus = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/clear_button_color = Color( 0, 0, 0, 1 )
 max_length = 30
+selecting_enabled = false
 placeholder_text = "Your name..."
 caret_blink = true
 __meta__ = {
@@ -162,6 +165,7 @@ margin_left = -42.2118
 margin_top = 232.611
 margin_right = 125.788
 margin_bottom = 284.611
+mouse_filter = 2
 custom_styles/focus = SubResource( 6 )
 custom_styles/normal = SubResource( 7 )
 custom_fonts/font = ExtResource( 1 )
@@ -201,11 +205,24 @@ margin_bottom = 297.008
 texture = ExtResource( 7 )
 expand = true
 
-[node name="Label" type="Label" parent="."]
-margin_left = -277.928
-margin_top = 282.331
-margin_right = 210.072
-margin_bottom = 305.331
-custom_fonts/font = SubResource( 9 )
-custom_colors/font_color = Color( 0, 0, 0, 0.368627 )
-text = "PS: press Tab or Square button on controller to cycle through options"
+[node name="Switch" parent="." instance=ExtResource( 9 )]
+margin_left = 334.0
+margin_top = 243.0
+margin_right = 485.0
+margin_bottom = 243.0
+text = "Cycle"
+
+[node name="Confirm" parent="." instance=ExtResource( 9 )]
+margin_left = 336.019
+margin_top = 281.636
+margin_right = 487.019
+margin_bottom = 281.636
+text = "Sign"
+
+[node name="Keyboard" parent="Confirm/HBoxContainer" index="0"]
+texture = ExtResource( 10 )
+
+[node name="PlayStation" parent="Confirm/HBoxContainer" index="2"]
+texture = ExtResource( 11 )
+
+[editable path="Confirm"]

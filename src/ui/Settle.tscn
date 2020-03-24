@@ -1,0 +1,162 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://src/ui/ControlsTip.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/graphics/ui/playstation/playstation1.png" type="Texture" id=2]
+[ext_resource path="res://assets/graphics/ui/keyboard/key_enter.png" type="Texture" id=3]
+[ext_resource path="res://src/ui/restart_decree.gd" type="Script" id=4]
+[ext_resource path="res://assets/fonts/main_font.tres" type="DynamicFont" id=5]
+[ext_resource path="res://assets/graphics/ui/background.png" type="Texture" id=6]
+[ext_resource path="res://assets/graphics/ui/royal_stamp.png" type="Texture" id=7]
+[ext_resource path="res://assets/graphics/ui/royal_theme.png" type="Texture" id=8]
+[ext_resource path="res://assets/graphics/ui/select.png" type="Texture" id=9]
+[ext_resource path="res://assets/graphics/ui/signature_xs.png" type="Texture" id=10]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 144, 144 )
+margin_left = 47.0
+margin_right = 47.0
+margin_top = 47.0
+margin_bottom = 47.0
+
+[sub_resource type="DynamicFontData" id=2]
+font_path = "res://assets/fonts/BLKCHCRY.TTF"
+
+[sub_resource type="DynamicFont" id=3]
+size = 28
+font_data = SubResource( 2 )
+
+[node name="Settle" type="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackgroundColor" type="TextureRect" parent="."]
+margin_left = -566.0
+margin_top = -379.0
+margin_right = 672.0
+margin_bottom = 426.0
+texture = ExtResource( 6 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="Panel" parent="."]
+margin_left = -359.0
+margin_top = -272.0
+margin_right = 301.0
+margin_bottom = 313.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="RichTextLabel" parent="."]
+margin_left = -279.928
+margin_top = -195.316
+margin_right = 233.072
+margin_bottom = 229.684
+custom_fonts/normal_font = ExtResource( 5 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
+bbcode_text = "[center]Loyal servant of the Jerican Empire[/center]
+
+This is one of the scrolls I gave you to to take along, as they bear my seal. As you construct a settlement on a foreign island, expanding our empire, send me a signed scroll at the minute.
+
+As soon as the carrier eagle arrives, you will receive your renumeration of 500g for all of your efforts. 
+
+"
+text = "Loyal servant of the Jerican Empire
+
+This is one of the scrolls I gave you to to take along, as they bear my seal. As you construct a settlement on a foreign island, expanding our empire, send me a signed scroll at the minute.
+
+As soon as the carrier eagle arrives, you will receive your renumeration of 500g for all of your efforts. 
+
+"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Date" type="RichTextLabel" parent="."]
+visible = false
+margin_left = -294.336
+margin_top = -239.3
+margin_right = 231.664
+margin_bottom = 200.7
+custom_fonts/normal_font = ExtResource( 5 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
+bbcode_text = "[right]1st of Summer 1431[/right]"
+text = "1st of Summer 1431"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoyalDecree" type="RichTextLabel" parent="."]
+visible = false
+margin_left = -285.568
+margin_top = -239.0
+margin_right = 227.432
+margin_bottom = 188.0
+custom_fonts/bold_font = ExtResource( 5 )
+custom_fonts/normal_font = SubResource( 3 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
+bbcode_text = "Royal Decree"
+text = "Royal Decree"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Marker" type="TextureRect" parent="."]
+margin_left = 160.0
+margin_top = 240.0
+margin_right = 192.0
+margin_bottom = 272.0
+texture = ExtResource( 9 )
+expand = true
+
+[node name="SuccessIcon" type="TextureRect" parent="."]
+margin_left = 188.893
+margin_top = 236.403
+margin_right = 236.893
+margin_bottom = 284.403
+texture = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Seal" type="TextureRect" parent="."]
+margin_left = 234.599
+margin_top = 249.008
+margin_right = 282.599
+margin_bottom = 297.008
+texture = ExtResource( 7 )
+expand = true
+
+[node name="ControlsTip" parent="." instance=ExtResource( 1 )]
+margin_left = 344.79
+margin_top = 270.699
+margin_right = 344.79
+margin_bottom = 270.699
+text = "Sign"
+
+[node name="Keyboard" parent="ControlsTip/HBoxContainer" index="0"]
+texture = ExtResource( 3 )
+
+[node name="PlayStation" parent="ControlsTip/HBoxContainer" index="2"]
+texture = ExtResource( 2 )
+
+[editable path="ControlsTip"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://assets/graphics/ui/ui_border.png" type="Texture" id=1]
 [ext_resource path="res://assets/graphics/ui/select.png" type="Texture" id=2]
@@ -7,6 +7,14 @@
 [ext_resource path="res://assets/graphics/decorations/food.png" type="Texture" id=5]
 [ext_resource path="res://assets/graphics/boat/small_boat_LR_1.png" type="Texture" id=6]
 [ext_resource path="res://assets/graphics/ui/speedup.png" type="Texture" id=7]
+[ext_resource path="res://src/ui/ControlsTip.tscn" type="PackedScene" id=8]
+[ext_resource path="res://assets/graphics/ui/keyboard/key_left_right.png" type="Texture" id=9]
+[ext_resource path="res://assets/graphics/ui/playstation/playstation6.png" type="Texture" id=10]
+[ext_resource path="res://assets/graphics/ui/keyboard/key_enter.png" type="Texture" id=11]
+[ext_resource path="res://assets/graphics/ui/playstation/playstation1.png" type="Texture" id=12]
+[ext_resource path="res://assets/fonts/main_font.tres" type="DynamicFont" id=13]
+[ext_resource path="res://assets/graphics/ui/keyboard/escape.png" type="Texture" id=14]
+[ext_resource path="res://assets/graphics/ui/playstation/playstation2.png" type="Texture" id=15]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 1 )
@@ -22,13 +30,6 @@ font_path = "res://assets/fonts/BLKCHCRY.TTF"
 [sub_resource type="DynamicFont" id=3]
 size = 26
 font_data = SubResource( 2 )
-
-[sub_resource type="DynamicFontData" id=4]
-font_path = "res://assets/fonts/BLKCHCRY.TTF"
-
-[sub_resource type="DynamicFont" id=5]
-size = 18
-font_data = SubResource( 4 )
 
 [node name="ShipUpgrades" type="Control"]
 anchor_right = 1.0
@@ -75,23 +76,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="SmallBoat" parent="Upgrades" instance=ExtResource( 4 )]
+margin_left = 217.184
+margin_top = 215.046
+margin_right = 257.184
+margin_bottom = 255.046
+upgrade_name = "small_boat"
+base_price = 200
+
+[node name="Image" parent="Upgrades/SmallBoat" index="0"]
+texture = ExtResource( 6 )
+
 [node name="InventorySpace" parent="Upgrades" instance=ExtResource( 4 )]
-margin_left = 213.354
+margin_left = 357.913
 margin_top = 212.092
-margin_right = 253.354
+margin_right = 397.913
 margin_bottom = 252.092
+base_price = 200
 max_charges = 6
-
-[node name="Speed" parent="Upgrades" instance=ExtResource( 4 )]
-margin_left = 360.297
-margin_top = 213.779
-margin_right = 400.297
-margin_bottom = 253.779
-upgrade_name = "speed"
-max_charges = 3
-
-[node name="Image" parent="Upgrades/Speed" index="0"]
-texture = ExtResource( 7 )
 
 [node name="Stamina" parent="Upgrades" instance=ExtResource( 4 )]
 margin_left = 525.993
@@ -99,34 +101,89 @@ margin_top = 214.645
 margin_right = 565.993
 margin_bottom = 254.645
 upgrade_name = "stamina"
-max_charges = 3
+base_price = 250
+max_charges = 10
 
 [node name="Image" parent="Upgrades/Stamina" index="0"]
 texture = ExtResource( 5 )
 
-[node name="SmallBoat" parent="Upgrades" instance=ExtResource( 4 )]
-margin_left = 681.914
-margin_top = 215.046
-margin_right = 721.914
-margin_bottom = 255.046
-upgrade_name = "small_boat"
+[node name="Speed" parent="Upgrades" instance=ExtResource( 4 )]
+margin_left = 682.907
+margin_top = 213.779
+margin_right = 722.907
+margin_bottom = 253.779
+upgrade_name = "speed"
+base_price = 200
+max_charges = 10
 
-[node name="Image" parent="Upgrades/SmallBoat" index="0"]
-texture = ExtResource( 6 )
+[node name="Image" parent="Upgrades/Speed" index="0"]
+texture = ExtResource( 7 )
 
-[node name="Label" type="Label" parent="."]
-margin_left = 244.374
-margin_top = 449.631
-margin_right = 716.374
-margin_bottom = 472.631
-custom_fonts/font = SubResource( 5 )
-custom_colors/font_color = Color( 0, 0, 0, 0.537255 )
-text = "Tip: Press arrow keys to cycle through options and Enter/X to buy"
+[node name="ControlsTip" parent="." instance=ExtResource( 8 )]
+margin_left = 829.472
+margin_top = 424.912
+margin_right = 16.4724
+margin_bottom = -132.087
+text = "Shoppe"
+
+[node name="ControlsTip3" parent="." instance=ExtResource( 8 )]
+margin_left = 829.472
+margin_top = 465.301
+margin_right = 16.4724
+margin_bottom = -91.6993
+text = "Switch"
+
+[node name="Keyboard" parent="ControlsTip3/HBoxContainer" index="0"]
+texture = ExtResource( 9 )
+
+[node name="PlayStation" parent="ControlsTip3/HBoxContainer" index="2"]
+texture = ExtResource( 10 )
+
+[node name="ControlsTip4" parent="." instance=ExtResource( 8 )]
+margin_left = 829.472
+margin_top = 543.263
+margin_right = 16.4724
+margin_bottom = -13.7378
+text = "Exit"
+
+[node name="Keyboard" parent="ControlsTip4/HBoxContainer" index="0"]
+texture = ExtResource( 14 )
+
+[node name="PlayStation" parent="ControlsTip4/HBoxContainer" index="2"]
+texture = ExtResource( 15 )
+
+[node name="ControlsTip2" parent="." instance=ExtResource( 8 )]
+margin_left = 830.722
+margin_top = 505.353
+margin_right = 17.7224
+margin_bottom = -51.6469
+text = "Buy"
+
+[node name="Keyboard" parent="ControlsTip2/HBoxContainer" index="0"]
+texture = ExtResource( 11 )
+
+[node name="PlayStation" parent="ControlsTip2/HBoxContainer" index="2"]
+texture = ExtResource( 12 )
+
+[node name="Description" type="Label" parent="."]
+margin_left = 225.0
+margin_top = 344.687
+margin_right = 719.0
+margin_bottom = 436.687
+custom_fonts/font = ExtResource( 13 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+
+[editable path="Upgrades/SmallBoat"]
 
 [editable path="Upgrades/InventorySpace"]
 
-[editable path="Upgrades/Speed"]
-
 [editable path="Upgrades/Stamina"]
 
-[editable path="Upgrades/SmallBoat"]
+[editable path="Upgrades/Speed"]
+
+[editable path="ControlsTip3"]
+
+[editable path="ControlsTip4"]
+
+[editable path="ControlsTip2"]

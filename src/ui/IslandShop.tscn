@@ -1,8 +1,15 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://src/ui/island_shop.gd" type="Script" id=1]
 [ext_resource path="res://assets/graphics/ui/select.png" type="Texture" id=2]
 [ext_resource path="res://assets/graphics/ui/ui_border.png" type="Texture" id=3]
+[ext_resource path="res://src/ui/ControlsTip.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/graphics/ui/playstation/playstation7.png" type="Texture" id=5]
+[ext_resource path="res://assets/graphics/ui/keyboard/key_up_down.png" type="Texture" id=6]
+[ext_resource path="res://assets/graphics/ui/keyboard/key_left_right.png" type="Texture" id=7]
+[ext_resource path="res://assets/graphics/ui/playstation/playstation6.png" type="Texture" id=8]
+[ext_resource path="res://assets/graphics/ui/keyboard/escape.png" type="Texture" id=9]
+[ext_resource path="res://assets/graphics/ui/playstation/playstation2.png" type="Texture" id=10]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 3 )
@@ -18,13 +25,6 @@ font_path = "res://assets/fonts/BLKCHCRY.TTF"
 [sub_resource type="DynamicFont" id=3]
 size = 26
 font_data = SubResource( 2 )
-
-[sub_resource type="DynamicFontData" id=4]
-font_path = "res://assets/fonts/BLKCHCRY.TTF"
-
-[sub_resource type="DynamicFont" id=5]
-size = 18
-font_data = SubResource( 4 )
 
 [node name="IslandShop" type="Control"]
 anchor_right = 1.0
@@ -67,14 +67,54 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="."]
-margin_left = 262.12
-margin_top = 412.738
-margin_right = 880.12
-margin_bottom = 441.738
-custom_fonts/font = SubResource( 5 )
-custom_colors/font_color = Color( 0, 0, 0, 0.533333 )
-text = "Tip: Press arrow keys to cycle through options and buy/sell"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="ControlsTip" parent="." instance=ExtResource( 4 )]
+margin_left = 852.98
+margin_top = 469.558
+margin_right = 852.98
+margin_bottom = 469.558
+text = "Buy/Sell"
+
+[node name="Keyboard" parent="ControlsTip/HBoxContainer" index="0"]
+texture = ExtResource( 6 )
+
+[node name="PlayStation" parent="ControlsTip/HBoxContainer" index="2"]
+texture = ExtResource( 5 )
+
+[node name="ControlsTip2" parent="." instance=ExtResource( 4 )]
+margin_left = 820.897
+margin_top = 508.41
+margin_right = 820.897
+margin_bottom = 508.411
+text = "Switch"
+
+[node name="Keyboard" parent="ControlsTip2/HBoxContainer" index="0"]
+texture = ExtResource( 7 )
+
+[node name="PlayStation" parent="ControlsTip2/HBoxContainer" index="2"]
+texture = ExtResource( 8 )
+
+[node name="Exit" parent="." instance=ExtResource( 4 )]
+margin_left = 820.897
+margin_top = 545.224
+margin_right = 820.897
+margin_bottom = 545.224
+text = "Exit"
+
+[node name="Keyboard" parent="Exit/HBoxContainer" index="0"]
+texture = ExtResource( 9 )
+
+[node name="PlayStation" parent="Exit/HBoxContainer" index="2"]
+texture = ExtResource( 10 )
+
+[node name="Upgrades" parent="." instance=ExtResource( 4 )]
+margin_left = 819.617
+margin_top = 427.881
+margin_right = 819.617
+margin_bottom = 427.881
+text = "Upgrades"
+
+[editable path="ControlsTip"]
+
+[editable path="ControlsTip2"]
+
+[editable path="Exit"]

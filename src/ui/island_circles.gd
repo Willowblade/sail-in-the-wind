@@ -26,7 +26,7 @@ func _draw():
 	for island in islands:
 		# unknown island
 		if island.island_name == "":
-			var circle_radius = (island.position - capital_location).length() / 70
+			var circle_radius = (island.position - capital_location).length() / 100
 			var circle_location = island.position + circle_radius * island.map_offset - offset
 			draw_circle(circle_location / GameState.minimap_scale, circle_radius, Color(1, 0.5, 0, 0.6))
 		else:

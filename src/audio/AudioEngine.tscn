@@ -8,6 +8,8 @@
 [node name="AudioEngine" type="Node"]
 pause_mode = 2
 script = ExtResource( 1 )
+MAX_SIMULTANEOUS_EFFECTS = 20
+MAX_SIMULTANEOUS_SOUNDS = 20
 
 [node name="BackgroundPlayer" type="AudioStreamPlayer" parent="."]
 autoplay = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/fonts/main_font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/graphics/ui/signature_xs.png" type="Texture" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://src/ui/restart_decree.gd" type="Script" id=5]
 [ext_resource path="res://assets/graphics/ui/royal_stamp.png" type="Texture" id=6]
 [ext_resource path="res://assets/graphics/ui/royal_theme.png" type="Texture" id=7]
+[ext_resource path="res://src/ui/ControlsTip.tscn" type="PackedScene" id=8]
+[ext_resource path="res://assets/graphics/ui/keyboard/key_enter.png" type="Texture" id=9]
+[ext_resource path="res://assets/graphics/ui/playstation/playstation1.png" type="Texture" id=10]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 7 )
@@ -152,3 +155,18 @@ margin_right = 282.599
 margin_bottom = 297.008
 texture = ExtResource( 6 )
 expand = true
+
+[node name="ControlsTip" parent="." instance=ExtResource( 8 )]
+margin_left = 344.79
+margin_top = 270.699
+margin_right = 344.79
+margin_bottom = 270.699
+text = "Sign"
+
+[node name="Keyboard" parent="ControlsTip/HBoxContainer" index="0"]
+texture = ExtResource( 9 )
+
+[node name="PlayStation" parent="ControlsTip/HBoxContainer" index="2"]
+texture = ExtResource( 10 )
+
+[editable path="ControlsTip"]

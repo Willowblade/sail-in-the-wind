@@ -3,14 +3,17 @@ extends CanvasLayer
 
 onready var island_name_view = $IslandNameView
 onready var animation_player = $AnimationPlayer
-onready var name_island_dialog = $NameIslandDialog
-onready var settle_dialog = $SettleDialog
+onready var name_island = $NameIsland
+onready var settle = $Settle
 onready var inventory = $Inventory
 onready var gold_count = $GoldCount
 onready var stamina = $Stamina
 onready var ship_upgrades = $ShipUpgrades
 onready var island_shop = $IslandShop
+onready var map = $Map
 onready var minimap = $Minimap
+onready var controls = $Controls
+onready var instructions = $Instructions
 
 onready var decree = $Decree
 onready var restart_decree = $RestartDecree
@@ -24,6 +27,8 @@ var enabled = false
 var open_uis = []
 
 
+var in_island
+
 signal island_named(island_name)
 signal settle()
 signal new_player_name(player_name_data)
@@ -31,18 +36,72 @@ signal new_player_name(player_name_data)
 
 var button_pressed = null
 
+func _ready():
+	disable()
+
+	GameState.connect("updated_game_state", self, "on_updated_game_state")
+	
+	for child in get_children():
+		if child == animation_player:
+			continue
+		child.hide()
+	
+	for child in menus.values():
+		child.connect("close", self, "_on_close_ui")
+
+	island_name_view.show()
+
+
+	decree.connect("done", self, "_on_decree_done")
+	restart_decree.connect("done", self, "_on_restart_decree_done")
+	instructions.connect("done", self, "_on_instructions_done")
+	settle.connect("done", self, "_on_settle_done")
+	name_island.connect("done", self, "_on_name_island_done")
+	on_updated_game_state()
+	
+	if GameState.DEBUG == true:
+		enable()
+
+func _on_in_island(is_in_island):
+	in_island = is_in_island
+	if is_in_island:
+		if GameState.game_state.upgrades.small_boat == 1:
+			$Controls/Boat.show()
+	else:
+		if GameState.game_state.upgrades.small_boat == 1:
+			$Controls/Boat.hide()
+			
+func _on_interacting(is_interacting):
+	if is_interacting:
+		$Controls/Interact.show()
+	else:
+		$Controls/Interact.hide()
+
+func _on_founding(is_founding):
+	if is_founding:
+		$Controls/Settle.show()
+	else:
+		$Controls/Settle.hide()
+
+
 func pause_game():
 	get_tree().paused = true
 	stamina.pause()
+	stop_game()
 	
 func resume_game():
 	get_tree().paused = false
 	stamina.play()
+	start_game()
 
 func open_shop(island: Island, is_capital: bool):
 	pause_game()
+	AudioEngine.play_effect("assets/audio/sfx/navigation/boat_arrive.ogg")
+	AudioEngine.play_background_music("assets/audio/sfx/navigation/shx_city_slower.ogg")
 	island_shop.set_island(island)
 	island_shop.show()
+	inventory.show()
+	gold_count.show()
 	ship_upgrades.set_physics_process(false)
 	island_shop.set_physics_process(true)
 	if is_capital:
@@ -55,6 +114,7 @@ func close_shops():
 	ship_upgrades.hide()
 	ship_upgrades.set_physics_process(false)
 	island_shop.set_physics_process(false)
+	AudioEngine.play_effect("assets/audio/sfx/navigation/boat_leaving.ogg")
 	resume_game()
 	
 func toggle_upgrades():
@@ -69,35 +129,25 @@ func toggle_upgrades():
 		ship_upgrades.set_physics_process(false)
 		island_shop.set_physics_process(true)
 
-func _ready():
-	disable()
-	
-	GameState.connect("updated_game_state", self, "on_updated_game_state")
-	
-	for child in get_children():
-		if child == animation_player:
-			continue
-		child.hide()
-	
-	for child in menus.values():
-		child.connect("close", self, "_on_close_ui")
-
-	name_island_dialog.connect("popup_hide", self, "_on_name_island_closed")
-	island_name_view.show()
+func show_interact():
+	$Controls/Interact.show()
 
 
-	decree.connect("done", self, "_on_decree_done")
-	restart_decree.connect("done", self, "_on_restart_decree_done")
-	on_updated_game_state()
+func hide_interact():
+	$Controls/Interact.hide()
 	
-	if GameState.DEBUG == true:
-		enable()
+
+
+func update_minimap(player: Player):
+	minimap.load_islands(player)
 		
 func start_game():
 	inventory.show()
 	gold_count.show()
 	stamina.show()
 	stamina.play()
+	minimap.show()
+	controls.show()
 	enable()
 	
 		
@@ -106,23 +156,40 @@ func stop_game():
 	gold_count.hide()
 	stamina.hide()
 	stamina.pause()
-	disable()
+	minimap.hide()
+	controls.hide()
+#	disable()
 
 	
 func on_updated_game_state():
 	gold_count.get_node("Label").text = ": " + str(GameState.game_state["gold"])
+	if GameState.game_state.upgrades.small_boat == 1:
+		if in_island:
+			$Controls/Boat.show()
+	else:
+		$Controls/Boat.hide()
 	
 func _on_restart_decree_done():
 	resume_game()
 	restart_decree.hide()
 	restart_decree.set_physics_process(false)
-	
-func _on_decree_done(decree_data):
+
+func _on_instructions_done():
+	print("On instructions done...")
 	resume_game()
+	instructions.hide()
+	instructions.set_physics_process(false)
+
+func _on_decree_done(decree_data):
+	emit_signal("new_player_name", decree_data)
 	decree.hide()
 	decree.set_physics_process(false)
-	emit_signal("new_player_name", decree_data)
+	instructions.show()
+	instructions.activate()
+	yield(get_tree().create_timer(0.2), "timeout")
+	instructions.set_physics_process(true)
 	
+		
 func show_decree():
 	pause_game()
 	decree.show()
@@ -170,19 +237,24 @@ func _on_close_ui(menu):
 #			if open_ui.should_pause:
 #				return
 
-func close_settle_dialog():
+func close_settle():
 	pass
 
 
+func _on_near_large_boat(is_near_large_boat):
+	if is_near_large_boat:
+		$Controls/LargeBoat.show()
+	else:
+		$Controls/LargeBoat.hide()
 
 func show_map(player):
 	pause_game()
-	minimap.load_islands(player)
-	minimap.show()
+	map.load_islands(player)
+	map.show()
 
 
 func hide_map():
-	minimap.hide()
+	map.hide()
 	resume_game()
 
 
@@ -191,13 +263,13 @@ func _input(event):
 		print("Something wrong with UI")
 		return
 		
-	if Input.is_action_just_pressed("ui_menu"):
-		if name_island_dialog.visible:
+	if Input.is_action_just_pressed("ui_cancel"):
+		if name_island.visible:
 			# have to name the island. Box still needs theming!
 			pass
-		elif settle_dialog.visible:
-			close_settle_dialog()
-		elif minimap.visible:
+		elif settle.visible:
+			close_settle()
+		elif map.visible:
 			hide_map()
 		elif ship_upgrades.visible:
 			close_shops()
@@ -210,8 +282,8 @@ func _input(event):
 #			open_ui("escape")
 
 	# elif Input.is_action_just_pressed("ui_map"):
-	# 	if minimap.visible:
-	# 		print("Closing minimap")
+	# 	if map.visible:
+	# 		print("Closing map")
 	# 		hide_map()
 
 	elif Input.is_key_pressed(KEY_1): 
@@ -268,26 +340,32 @@ func show_island_name(island_name: String):
 		animation_player.stop(true)
 	animation_player.play("name_label")
 	
-func show_name_island_dialog():
+func show_name_island(island: Island):
 	pause_game()
-	name_island_dialog.popup_centered()
+	name_island.show()
+	name_island.activate()
+	name_island.set_island(island)
+	name_island.set_physics_process(true)
 	
-func _on_name_island_closed():
+func _on_name_island_done(island_name):
 	resume_game()
-	var text = name_island_dialog.get_node("LineEdit").text
-	print("Modal closed, ", text)
-	emit_signal("island_named", text)
+	emit_signal("island_named", island_name.name)
+	AudioEngine.play_effect("assets/audio/sfx/navigation/island_name.ogg")
+	name_island.hide()
+	name_island.set_physics_process(false)
 
-func settle():
+func open_settle():
 	pause_game()
-	settle_dialog.connect("confirmed", self, "_on_settle_confirmed")
-	settle_dialog.connect("popup_hide", self, "_on_settle_denied")
-	settle_dialog.show_modal(true)
+	settle.show()
+	settle.activate()
+	settle.set_physics_process(true)
+
 	
-func _on_settle_confirmed():
+func _on_settle_done():
+	resume_game()
 	emit_signal("settle")
-	resume_game()
+	settle.hide()
+	settle.set_physics_process(false)
+
 	
-func _on_settle_denied():
-	resume_game()
 	

@@ -17,7 +17,7 @@ func add_effect():
 	var effect_player = EffectPlayer.instance()
 	add_child(effect_player)
 
-	effect_player.connect("finished", self, "_on_effect_finished")
+	effect_player.connect("audio_finished", self, "_on_effect_finished")
 
 	effect_players.append(effect_player)
 

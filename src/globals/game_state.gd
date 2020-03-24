@@ -3,8 +3,6 @@ extends Node
 var game_state = {
 	"gold": 500,
 	"player": {
-		# "name": "Testyman",
-		# "boat_name": "My main boaty!",
 	},
 	"inventory": {
 		"space": 6,
@@ -23,8 +21,8 @@ var DEBUG = false
 signal updated_game_state(game_state)
 
 
-var minimap_scale = 15
-const TIME_PER_FOOD = 75.0
+var minimap_scale = 10
+const TIME_PER_FOOD = 45.0
 
 func all_islands_explored():
 	for island in get_tree().get_nodes_in_group("island"):
@@ -83,6 +81,11 @@ func send_changed():
 
 func _ready():
 	AudioEngine.set_master_volume(0.6)
+	if DEBUG:
+		game_state.player = {
+			"name": "Testyman",
+			"boat_name": "My main boaty!",
+		}
 
 
 func get_save_game_data():

@@ -4,11 +4,16 @@ onready var audio_stream_random_pitch = AudioStreamRandomPitch.new()
 
 var currently_playing = null
 
+signal audio_finished
 
 func _ready():
 	# TODO can be expanded to have another audio stream instead? Which is not random
 	# Maybe make different groups and settings for effects in the Effects node
-	stream = audio_stream_random_pitch	
+	stream = audio_stream_random_pitch
+	connect("finished", self, "_on_finished")
+	
+func _on_finished():
+	emit_signal("audio_finished", self)
 
 func is_available():
 	return currently_playing == null
